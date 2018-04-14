@@ -16,8 +16,8 @@
 					</el-submenu>
 					<el-submenu index="4">
 						<template slot="title"><i class="el-icon-star-on"></i>内容管理</template>
-						<el-menu-item index="visitor">论文管理</el-menu-item>
-						<el-menu-item index="orderList">项目管理</el-menu-item>
+						<el-menu-item index="paper">论文管理</el-menu-item>
+						<el-menu-item index="project">项目管理</el-menu-item>
 					</el-submenu>
 					<el-submenu index="5">
 						<template slot="title"><i class="el-icon-menu"></i>机构管理</template>
