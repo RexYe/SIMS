@@ -24,7 +24,10 @@ const addDomain = r => require.ensure([], () => r(require('@/page/addDomain')), 
 const deleteDomain = r => require.ensure([], () => r(require('@/page/deleteDomain')), 'deleteDomain');
 const addAuthors = r => require.ensure([], () => r(require('@/page/addAuthors')), 'addAuthors');
 const deleteAuthors = r => require.ensure([], () => r(require('@/page/deleteAuthors')), 'deleteAuthors');
-
+const addUsers = r => require.ensure([], () => r(require('@/page/addUsers')), 'addUsers');
+const deleteUsers = r => require.ensure([], () => r(require('@/page/deleteUsers')), 'deleteUsers');
+const addOrganization = r => require.ensure([], () => r(require('@/page/addOrganization')), 'addOrganization');
+const deleteOrganization = r => require.ensure([], () => r(require('@/page/deleteOrganization')), 'deleteOrganization');
 
 
 const routes = [
@@ -89,6 +92,14 @@ const routes = [
 			component: adminSet,
 			meta: ['设置', '管理员设置'],
 		},{
+			path: '/addUsers',
+			component: addUsers,
+			meta: ['用户管理', '新增用户'],
+		},{
+			path: '/deleteUsers',
+			component: deleteUsers,
+			meta: ['用户管理', '删除用户'],
+		},{
 			path: '/addAuthors',
 			component: addAuthors,
 			meta: ['作者管理', '新增作者'],
@@ -96,6 +107,14 @@ const routes = [
 			path: '/deleteAuthors',
 			component: deleteAuthors,
 			meta: ['作者管理', '删除作者'],
+		},{
+			path: '/addOrganization',
+			component: addOrganization,
+			meta: ['机构管理', '新增机构'],
+		},{
+			path: '/deleteOrganization',
+			component: deleteOrganization,
+			meta: ['机构管理', '删除机构'],
 		},{
 			path: '/addDomain',
 			component: addDomain,

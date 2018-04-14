@@ -6,8 +6,8 @@
 					<el-menu-item index="manage"><i class="el-icon-menu"></i>首页</el-menu-item>
 					<el-submenu index="2">
 						<template slot="title"><i class="el-icon-document"></i>用户管理</template>
-						<el-menu-item index="userList">新建用户</el-menu-item>
-						<el-menu-item index="shopList">删除用户</el-menu-item>
+						<el-menu-item index="addUsers">新建用户</el-menu-item>
+						<el-menu-item index="deleteUsers">删除用户</el-menu-item>
 					</el-submenu>
 					<el-submenu index="3">
 						<template slot="title"><i class="el-icon-edit"></i>作者管理</template>
@@ -21,8 +21,8 @@
 					</el-submenu>
 					<el-submenu index="5">
 						<template slot="title"><i class="el-icon-menu"></i>机构管理</template>
-						<el-menu-item index="vueEdit">新增机构</el-menu-item>
-						<el-menu-item index="vueEdit">删除机构</el-menu-item>
+						<el-menu-item index="addOrganization">新增机构</el-menu-item>
+						<el-menu-item index="deleteOrganization">删除机构</el-menu-item>
 					</el-submenu>
 					<el-submenu index="6">
 						<template slot="title"><i class="el-icon-more"></i>领域管理</template>
