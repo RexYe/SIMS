@@ -3,9 +3,12 @@ import App from './App'
 import Vuex from 'vuex'
 import VueRouer from 'vue-router'
 import line from 'components/line/line'
-import {DatePicker} from 'element-ui'
+import index from 'components/index/index'
+import {DatePicker, Input} from 'element-ui'
+
 
 Vue.component(DatePicker.name, DatePicker)
+Vue.component(Input.name, Input)
 
 Vue.use(VueRouer)
 Vue.use(Vuex)
@@ -18,8 +21,12 @@ const store = new Vuex.Store({
 });
 const router = new VueRouer({
   routes: [{
-    path: '/',
+    path: '/line',
     component: line
+  },
+  {
+    path: '/',
+    component: index
   }],
   linkActiveClass: 'active'
 })
