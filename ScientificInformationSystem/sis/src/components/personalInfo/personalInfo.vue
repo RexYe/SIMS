@@ -1,7 +1,7 @@
 <template>
-	<div class="index">
+	<div class="personalInfo">
 		<v-header></v-header>
-		<div class="index-container">科研信息管理系统</div>
+		<div class="personalInfo-container">个人信息</div>
 	</div>
 </template>
 
@@ -19,11 +19,11 @@ export default {
 
 </script>
 <style scoped>
-	.index{
+	.personalInfo{
 		width: 100%;
 		height: 100%;
 	}
-	.index-container{
+	.personalInfo-container{
 		height: 900px;
 		margin-top: 90px;
 	}

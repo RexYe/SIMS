@@ -4,14 +4,16 @@ import Vuex from 'vuex'
 import VueRouer from 'vue-router'
 import line from 'components/line/line'
 import index from 'components/index/index'
-import {DatePicker, Input} from 'element-ui'
+import personalInfo from 'components/personalInfo/personalInfo'
+import search from 'components/search/search'
+import interpersonalRelationshipNetwork from 'components/dataVisualization/interpersonalRelationshipNetwork'
 
-
-Vue.component(DatePicker.name, DatePicker)
-Vue.component(Input.name, Input)
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(VueRouer)
 Vue.use(Vuex)
+Vue.use(ElementUI);
 
 const store = new Vuex.Store({
   state: {
@@ -23,8 +25,16 @@ const router = new VueRouer({
   routes: [{
     path: '/line',
     component: line
-  },
-  {
+  },{
+    path: '/search',
+    component: search
+  },{
+    path: '/interpersonalRelationshipNetwork',
+    component: interpersonalRelationshipNetwork
+  },{
+    path: '/personalInfo',
+    component: personalInfo
+  },{
     path: '/',
     component: index
   }],
