@@ -28,6 +28,6 @@ export default {
 	}
 	.index-container{
 		height: 900px;
-		margin-top: 90px;
+		margin-top: 70px;
 	}
 </style>

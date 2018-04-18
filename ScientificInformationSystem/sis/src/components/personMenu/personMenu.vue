@@ -1,9 +1,9 @@
 <template>
     <div class="person-Menu">
          <el-menu
-              default-active="personalInfo"
-              background-color="#545c64"
-              text-color="#fff"
+              :default-active="index"
+              background-color="white"
+              text-color="black"
               active-text-color="#ffd04b"
               router>
              <el-menu-item index="personalInfo">
@@ -30,11 +30,13 @@
 </style>
 <script>
 export default {
-  props: ['msg'],
-  data() {
-    return {
+    props: {
+        index: String
+    },
+    data() {
+        return {
 
+        }
     }
-  }
 }
 </script>

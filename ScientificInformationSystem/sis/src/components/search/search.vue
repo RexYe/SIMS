@@ -36,17 +36,17 @@ import header from 'components/header/header'
 
 
 export default {
-  data() {
-  	return {
-  		searchData: [{
-          name: '王小',
-          organization: '浙江工业大学'
-        }, {
-          name: '王小',
-          organization: '东南大学'
-        }]
-  	}
-  },
+data() {
+	return {
+		searchData: [{
+			name: '王小',
+			organization: '浙江工业大学'
+		}, {
+			name: '王小',
+			organization: '东南大学'
+		}]
+	}
+},
   components: {
     'v-header': header
   },
@@ -57,7 +57,6 @@ export default {
 	}
   }
 }
-
 </script>
 <style scoped>
 	.search{
@@ -66,7 +65,7 @@ export default {
 	}
 	.search-container{
 		height: 900px;
-		margin-top: 90px;
+		margin-top: 70px;
 	}
 	.search-results{
 		width: 70%;

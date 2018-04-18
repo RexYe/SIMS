@@ -12,7 +12,7 @@
 					 <p-menu index="interpersonalRelationshipNetwork"></p-menu>
 				</el-aside>
 				<el-main>
-					<d-header index="interpersonalRelationshipNetwork"></d-header>
+					<d-header index="focus"></d-header>
 					<div id="charts"></div>
 				</el-main>
 			</el-container>
@@ -43,7 +43,7 @@ export default {
         this.chart = echarts.init(document.getElementById(id), 'roma');
         this.chart.setOption({
            title: {
-                text: '人际关系网络'
+                text: '领域分布'
             },
             tooltip: {},
             legend: {

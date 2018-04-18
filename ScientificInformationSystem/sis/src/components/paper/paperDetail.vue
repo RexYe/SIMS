@@ -1,7 +1,7 @@
 <template>
-	<div class="paper">
+	<div class="paperDetail">
 		<v-header></v-header>
-		<div class="paper-container">
+		<div class="paperDetail-container">
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
 				<el-header>
 					<p-header name='王小' college="浙江工业大学"></p-header>
@@ -12,29 +12,11 @@
 					 <p-menu index="paper"></p-menu>
 				</el-aside>
 				<el-main>
-					<div class="paper-results">
-						<el-table
-			    :data="paperData"
-			    stripe
-			    style="width: 100%">
-			    <el-table-column
-			      prop="name"
-			      label="姓名"
-			      width="180">
-			    </el-table-column>
-			    <el-table-column
-			      prop="paperInfo"
-			      label="论文信息">
-			    </el-table-column>
-			    <el-table-column
-			      fixed="right"
-			      label="操作"
-			      width="100">
-			      <template slot-scope="scope">
-			        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-			      </template>
-			    </el-table-column>
-			  </el-table>
+					<div class="paper-details">
+						<p>{{paperName}}</p>
+						<p>作者：</p>
+						<p>单位：</p>
+						<p>关键词：</p>
 					</div>
 				</el-main>
 			</el-container>
@@ -51,14 +33,16 @@ import personMenu from 'components/personMenu/personMenu'
 export default {
   data() {
   	return {
-  		paperData: [{
+  		searchData: [{
           name: '王小',
           paperInfo: '徐新黎 吕琪 王万良 皇甫晓洁 . 一种带有能量自补给节点的异构传感器网络分簇路由算法. 计算机科学, 2017,     (01): 134-140'
         }, {
           name: '王小',
           paperInfo: '徐新黎 吕琪 王万良 皇甫晓洁 . 一种带有能量自补给节点的异构传感器网络分簇路由算法. 计算机科学, 2017,     (01): 134-140'
-        }]
+        }],
+        paperName: '基于网格排序的多目标粒子群优化算法'
   	}
+
   },
   components: {
     'v-header': header,
@@ -68,18 +52,18 @@ export default {
   methods: {
   		handleClick(row) {
 		console.log(row);
-		this.$router.push({path: '/paperDetail'})
+		this.$router.push({path: '/personalInfo'})
 	}
   }
 }
 
 </script>
 <style scoped>
-	.paper{
+	.paperDetail{
 		width: 100%;
 		height: 100%;
 	}
-	.paper-container{
+	.paperDetail-container{
 		height: 900px;
 		margin-top: 70px;
 	}
