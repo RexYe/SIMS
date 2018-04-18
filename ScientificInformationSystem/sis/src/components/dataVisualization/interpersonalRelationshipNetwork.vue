@@ -42,22 +42,120 @@ export default {
   	  drawPie (id) {
         this.chart = echarts.init(document.getElementById(id), 'roma');
         this.chart.setOption({
-           title: {
-                text: '人际关系网络'
+           backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+        offset: 0,
+        color: '#f7f8fa'
+    }, {
+        offset: 1,
+        color: '#cdd0d5'
+    }]),
+    title: {
+        text: "人际关系网络",
+        subtext: "YQL",
+        top: "top",
+        left: "center"
+    },
+    tooltip: {},
+    legend: [{
+        formatter: function(name) {
+            return echarts.format.truncateText(name, 40, '14px Microsoft Yahei', '…');
+        },
+        tooltip: {
+            show: true
+        },
+        selectedMode: 'false',
+        bottom: 20,
+        data: ['王小', '张三', '李四']
+    }],
+    toolbox: {
+        show: true,
+        feature: {
+            dataView: {
+                show: true,
+                readOnly: true
             },
-            tooltip: {},
-            legend: {
-                data:['销量']
+            restore: {
+                show: true
             },
-            xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-            },
-            yAxis: {},
-            series: [{
-                name: '销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
+            saveAsImage: {
+                show: true
+            }
+        }
+    },
+    animationDuration: 3000,
+    animationEasingUpdate: 'quinticInOut',
+    series: [{
+        name: '王小',
+        type: 'graph',
+        layout: 'force',
+
+        force: {
+            repulsion: 300
+        },
+        data: [{
+            "name": "王小",
+            "symbolSize": 30,
+            "draggable": "true",
+            "value": 27
+
+        }, {
+            "name": "张三",
+            "value": 15,
+            "symbolSize": 10,
+            "category": "张三",
+            "draggable": "true"
+        }, {
+            "name": "李四",
+            "value": 60,
+            "symbolSize": 10,
+            "category": "李四",
+            "draggable": "true"
+        }, {
+            "name": "林五",
+            "symbolSize": 3,
+            "category": "李四",
+            "draggable": "true",
+            "value": 1
+        }],
+        links: [{
+            "source": "王小",
+            "target": "张三"
+        }, {
+            "source": "张三",
+            "target": "林五"
+        }, {
+            "source": "张三",
+            "target": "林五"
+        }, {
+            "source": "王小",
+            "target": "李四"
+        }],
+        categories: [{
+            'name': '王小'
+        }, {
+            'name': '张三'
+        }, {
+            'name': '李四'
+        },{
+
+        }],
+        focusNodeAdjacency: true,
+        roam: true,
+        label: {
+            normal: {
+                show: true,
+                position: 'top',
+
+            }
+        },
+        lineStyle: {
+            normal: {
+                color: 'source',
+                curveness: 0,
+                type: "solid"
+            }
+        }
+    }]
         });
       }
   },

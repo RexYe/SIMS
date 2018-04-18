@@ -2,7 +2,7 @@
     <div class="personalInfo-header">
         <p id="name">{{name}}</p>
         <p id="organization">{{college}}</p>
-        <p><i class="el-icon-menu"></i>中国</p>
+        <p><i class="el-icon-location"></i>中国</p>
     </div>
 </template>
 <style>
