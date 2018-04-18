@@ -7,6 +7,8 @@ import index from 'components/index/index'
 import personalInfo from 'components/personalInfo/personalInfo'
 import search from 'components/search/search'
 import interpersonalRelationshipNetwork from 'components/dataVisualization/interpersonalRelationshipNetwork'
+import paper from 'components/paper/paper'
+
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -16,12 +18,13 @@ Vue.use(Vuex)
 Vue.use(ElementUI);
 
 const store = new Vuex.Store({
-  state: {
+  state: {  
     count: 0,
     color: ['#325B69', '#698570', '#AE5548', '#6D9EA8', '#9CC2B0', '#C98769']
   }
 });
 const router = new VueRouer({
+  mode: 'history',
   routes: [{
     path: '/line',
     component: line
@@ -35,6 +38,9 @@ const router = new VueRouer({
     path: '/personalInfo',
     component: personalInfo
   },{
+    path: '/paper',
+    component: paper
+  },{
     path: '/',
     component: index
   }],
@@ -43,7 +49,7 @@ const router = new VueRouer({
 new Vue({
   router,
   store,
-  template: '<App>',
+  template: '<App/>',
   components: {
     App
   },

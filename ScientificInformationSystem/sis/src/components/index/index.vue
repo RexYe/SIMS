@@ -11,6 +11,9 @@ import header from 'components/header/header'
 
 export default {
   data() {
+  	return {
+
+  	}
   },
   components: {
     'v-header': header

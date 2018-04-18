@@ -1,22 +1,42 @@
 <template>
 	<div class="interpersonalRelationshipNetwork">
 		<v-header></v-header>
-		<div class="interpersonalRelationshipNetwork-container">
-			<p>人际关系网络</p>
+		<el-container style="height: 200px; border: 1px solid #eee">
+				<el-header>
+					<p-header></p-header>
+				</el-header>
+			</el-container>
+			<el-container style="height: 500px;  border: 1px solid #eee">
+				<el-aside style="font-size: 30px; width: 180px;">
+					 <p-menu></p-menu>
+				</el-aside>
+				<el-main>
+					<div>人际关系网络
+					<div class="interpersonalRelationshipNetwork-container">
 			<div id="interpersonalRelationshipNetwork"></div>
-		</div>
+		</div></div>
+				</el-main>
+			</el-container>
+		
 	</div>
 </template>
 
 <script>
 import header from 'components/header/header'
 import echarts from 'echarts'
+import personalInfoHeader from 'components/personalInfoHeader/personalInfoHeader'
+import personMenu from 'components/personMenu/personMenu'
 
 export default {
   data() {
+  	return {
+  		
+  	}
   },
   components: {
-    'v-header': header
+    'v-header': header,
+    'p-header': personalInfoHeader,
+    'p-menu': personMenu
   },
   methods: {
   	  drawPie (id) {

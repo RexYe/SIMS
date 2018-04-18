@@ -44,7 +44,7 @@ export default {
   methods: {
     search: function() {
       console.log(this.searchKey, this.select);
-      location.hash = 'search';
+      this.$router.push({path: '/search'})
     }
   }
 }
