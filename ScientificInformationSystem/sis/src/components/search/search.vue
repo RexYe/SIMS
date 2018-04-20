@@ -2,7 +2,7 @@
 	<div class="search">
 		<v-header></v-header>
 		<div class="search-container">
-			<span>搜索结果:</span>
+			<div id="search-results-num">检索到{{searchResultsNum}}条结果</div>
 			<div class="search-results">
 				<el-table
 			    :data="searchData"
@@ -38,6 +38,7 @@ import header from 'components/header/header'
 export default {
 data() {
 	return {
+		searchResultsNum : 2,
 		searchData: [{
 			name: '王小',
 			organization: '浙江工业大学'
@@ -66,6 +67,11 @@ data() {
 	.search-container{
 		height: 900px;
 		margin-top: 70px;
+	}
+	.search-container #search-results-num{
+		padding-left: 10px;
+		padding-top: 10px;
+		color: #C2C1C1;
 	}
 	.search-results{
 		width: 70%;
