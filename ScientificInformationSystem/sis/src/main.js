@@ -13,6 +13,7 @@ import project from 'components/project/project'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// import 'assets/lib/jquery.particleground.js'
 
 Vue.use(VueRouer)
 Vue.use(Vuex)

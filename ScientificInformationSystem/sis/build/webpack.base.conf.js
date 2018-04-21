@@ -2,7 +2,7 @@ var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
-
+var webpack = require('webpack')
 var env = process.env.NODE_ENV
   // check env & config/index.js to decide weither to enable CSS Sourcemaps for the
   // various preprocessor loaders added to vue-loader at the end of this file
@@ -28,7 +28,8 @@ module.exports = {
       'assets': path.resolve(__dirname, '../src/assets'),
       'components': path.resolve(__dirname, '../src/components'),
       'common': path.resolve(__dirname, '../src/common'),
-      'img': path.resolve(__dirname, '../resource/img')
+      'img': path.resolve(__dirname, '../resource/img'),
+      "jquery": "jquery"
     }
   },
   resolveLoader: {
@@ -74,5 +75,11 @@ module.exports = {
         browsers: ['last 2 versions']
       })
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    })
+  ]
 }

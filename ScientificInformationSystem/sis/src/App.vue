@@ -14,6 +14,7 @@ export default {
       seller: {}
     }
   },
-  created() {}
+  created() {
+  }
 }
 </script>

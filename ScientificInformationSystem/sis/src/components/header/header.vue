@@ -21,6 +21,7 @@
         background: white;
         box-shadow: 1px 1px 5px black;
         z-index: 1000;
+        opacity: 0.99;
     }
     .Header-container{
         margin: 0 auto;
