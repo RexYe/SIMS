@@ -5,7 +5,7 @@
 				<div id="particles">
 				  <div class="intro">
 				    <h1>科研信息管理系统</h1>
-				    <p>A jQuery plugin for snazzy background particle systems</p>
+				    <p>A Scientific Information systems</p>
 				  </div>
 				</div>
 		</div>

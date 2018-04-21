@@ -42,13 +42,13 @@ export default {
   	  drawPie (id) {
         this.chart = echarts.init(document.getElementById(id), 'roma');
         this.chart.setOption({
-           backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
-        offset: 0,
-        color: '#f7f8fa'
-    }, {
-        offset: 1,
-        color: '#cdd0d5'
-    }]),
+    //        backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+    //     offset: 0,
+    //     color: '#f7f8fa'
+    // }, {
+    //     offset: 1,
+    //     color: '#cdd0d5'
+    // }]),
     title: {
         text: "人际关系网络",
         subtext: "YQL",
@@ -121,14 +121,11 @@ export default {
             "source": "王小",
             "target": "张三"
         }, {
-            "source": "张三",
-            "target": "林五"
-        }, {
-            "source": "张三",
-            "target": "林五"
-        }, {
             "source": "王小",
             "target": "李四"
+        }, {
+            "source": "王小",
+            "target": "林五"
         }],
         categories: [{
             'name': '王小'

@@ -6,7 +6,7 @@ import index from 'components/index/index'
 import personalInfo from 'components/personalInfo/personalInfo'
 import search from 'components/search/search'
 import interpersonalRelationshipNetwork from 'components/dataVisualization/interpersonalRelationshipNetwork'
-import focus from 'components/dataVisualization/focus'
+import domainDistribution from 'components/dataVisualization/domainDistribution'
 import paper from 'components/paper/paper'
 import paperDetail from 'components/paper/paperDetail'
 import project from 'components/project/project'
@@ -34,8 +34,8 @@ const router = new VueRouer({
     path: '/interpersonalRelationshipNetwork',
     component: interpersonalRelationshipNetwork
   },{
-    path: '/focus',
-    component: focus
+    path: '/domainDistribution',
+    component: domainDistribution
   },{
     path: '/personalInfo',
     component: personalInfo

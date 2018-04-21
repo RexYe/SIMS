@@ -45,7 +45,7 @@ export default {
     created() {},
     methods: {
         search: function() {
-            console.log(this.searchKey, this.select);
+            console.log(this.select, this.searchKey);
             this.$router.push({path: '/search'})
         }
     }
