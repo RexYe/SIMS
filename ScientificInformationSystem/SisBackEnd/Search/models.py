@@ -1,5 +1,5 @@
 from django.db import models
-
+import hashlib
 # Create your models here.
 
 #作者表
@@ -8,9 +8,9 @@ class authors(models.Model):
     name = models.CharField(max_length=30)
     sex = models.CharField(max_length=30)
     organization = models.CharField(max_length=30)
-    avatar_src = models.CharField(max_length=120)
-    work_experience = models.CharField(max_length=50)
-    edu_experience = models.CharField(max_length=50)
+    avatar_src = models.CharField(max_length=200)
+    work_experience = models.CharField(max_length=250)
+    edu_experience = models.CharField(max_length=250)
     domain = models.CharField(max_length=60)
     intro = models.CharField(max_length=100)
     def __unicode__(self):
