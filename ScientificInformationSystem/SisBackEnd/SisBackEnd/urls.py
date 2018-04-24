@@ -1,10 +1,10 @@
 
 from django.contrib import admin
-from django.urls import path
-from django.conf.urls import url
-import views
+from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'get_authors_by_name$', views.get_authors_by_name)
+    path('api/', include('Search.urls')),
+    path(r'^$', TemplateView.as_view(template_name="index.html"))
 ]

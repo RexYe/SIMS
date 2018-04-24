@@ -35,6 +35,7 @@
     }
 </style>
 <script>
+import DB from '../../DB/db'
 export default {
     data() {
         return {
@@ -46,7 +47,11 @@ export default {
     methods: {
         search: function() {
             console.log(this.select, this.searchKey);
-            this.$router.push({path: '/search'})
+            const t = this;
+            t.query_obj = this.searchKey
+            console.log(t.query_obj);
+               
+            this.$router.push({path: '/search'+'?'+'name='+t.query_obj})
         }
     }
 }

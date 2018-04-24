@@ -33,7 +33,7 @@
 
 <script>
 import header from 'components/header/header'
-
+import DB from '../../DB/db'
 
 export default {
 data() {
@@ -56,6 +56,23 @@ data() {
 		console.log(row);
 		this.$router.push({path: '/personalInfo'})
 	}
+  },
+  created: function() {
+  	const t = this
+  	console.log(1,this.$route)
+  	 DB.Search.get_authors_by_name({
+                    name: this.$route.query.name
+                }).then(result=>{
+                        console.log(result)
+                  //           let { list = [] } = result
+                  //       t.book_info.length = 0
+                  // t.book_info.push({
+                  //   author:list[0].author,
+                  //   publish_house:list[0].publish_house,
+                  //   original_price:list[0].original_price,
+                  //   book_img:list[0].book_img
+                  // })
+                })
   }
 }
 </script>
