@@ -64,7 +64,8 @@ data() {
                     name: this.$route.query.name
                 }).then(result=>{
                         console.log(result)
-                  //           let { list = [] } = result
+                            let { list = [] } = result
+                            console.log(list)
                   //       t.book_info.length = 0
                   // t.book_info.push({
                   //   author:list[0].author,
