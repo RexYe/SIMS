@@ -38,14 +38,8 @@ import DB from '../../DB/db'
 export default {
 data() {
 	return {
-		searchResultsNum : 2,
-		searchData: [{
-			name: '王小',
-			organization: '浙江工业大学'
-		}, {
-			name: '王小',
-			organization: '东南大学'
-		}]
+		searchResultsNum : 0,
+		searchData: []
 	}
 },
   components: {
@@ -53,27 +47,26 @@ data() {
   },
   methods:{
 	handleClick(row) {
-		console.log(row);
-		this.$router.push({path: '/personalInfo'})
+		// console.log('row:',row);
+		this.$router.push({path: '/personalInfo'+'?'+'uniid='+row.uniid})
 	}
   },
   created: function() {
+  	
+  },
+  mounted: function() {
   	const t = this
-  	console.log(1,this.$route)
-  	 DB.Search.get_authors_by_name({
-                    name: this.$route.query.name
-                }).then(result=>{
-                        console.log(result)
-                            let { list = [] } = result
-                            console.log(list)
-                  //       t.book_info.length = 0
-                  // t.book_info.push({
-                  //   author:list[0].author,
-                  //   publish_house:list[0].publish_house,
-                  //   original_price:list[0].original_price,
-                  //   book_img:list[0].book_img
-                  // })
-                })
+  	t.searchData = [];
+  	t.searchResultsNum = 0;
+	DB.Search.get_authors_by_name({
+	        name: this.$route.query.name
+	    }).then(result=>{
+	            console.log(result)
+                let { list = [] } = result
+                console.log(list)
+                t.searchData = list
+                t.searchResultsNum = list.length;
+	    })
   }
 }
 </script>

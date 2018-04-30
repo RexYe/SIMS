@@ -46,12 +46,11 @@ export default {
     created() {},
     methods: {
         search: function() {
-            console.log(this.select, this.searchKey);
+            // console.log('select:',this.select, 'searchKey:',this.searchKey);
             const t = this;
             t.query_obj = this.searchKey
-            console.log(t.query_obj);
-               
             this.$router.push({path: '/search'+'?'+'name='+t.query_obj})
+            location.reload();
         }
     }
 }

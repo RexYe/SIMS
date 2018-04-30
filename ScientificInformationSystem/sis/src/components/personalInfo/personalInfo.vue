@@ -86,6 +86,7 @@
 import header from 'components/header/header'
 import personalInfoHeader from 'components/personalInfoHeader/personalInfoHeader'
 import personMenu from 'components/personMenu/personMenu'
+import DB from '../../DB/db'
 
 export default {
 	data() {
@@ -115,6 +116,14 @@ export default {
 	},
 	methods: {
 		
+	},
+	mounted: function() {
+		DB.Search.get_personalinfo_by_uniid({
+			uniid: this.$route.query.uniid
+		}).then(result=>{
+		    let { list = [] } = result;
+		    console.log('list',list)
+		})
 	}
 }
 
