@@ -1,7 +1,7 @@
 <template>
     <div class="personalInfo-header">
         <div class="personal-avatar">
-            <img src="https://www.scholarmate.com/avatars/26/93/90/1000000406977.jpg?random=0.9303584585038922">
+            <img :src=avatar_src>
         </div>
         <div class="personal-world-info">
             <p id="name">{{name}}</p>
@@ -48,7 +48,8 @@
 export default {
   props: {
     name: String,
-    college: String
+    college: String,
+    avatar_src: String
   },
   data() {
     return {
