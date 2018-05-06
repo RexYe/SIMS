@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 import scrapy
+import json
 
 class ScholarmateSpider(scrapy.Spider):
     name = "scholarmate"
@@ -11,8 +12,9 @@ class ScholarmateSpider(scrapy.Spider):
         """
         The lines below is a spider contract about https://www.scholarmate.com .
         """
-        print('res:',response)
-        for quote in response.xpath('//div[@class="main-list__item"]'):
+
+        print('res:',response.xpath('//div[@class="main-list"]'))
+        for quote in response.xpath('//div[@class="pub-idx__main"]'):
             print('quote:', quote)
             yield {
                 'title': quote.xpath('.//div[@class="pub-idx__main_box"]/div[@class="pub-idx__main_title"]/a/text()').extract_first(),
