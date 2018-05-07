@@ -14,6 +14,7 @@ BOT_NAME = 'scholarmate'
 SPIDER_MODULES = ['scholarmate.spiders']
 NEWSPIDER_MODULE = 'scholarmate.spiders'
 
+SPLASH_URL = 'http://192.168.99.100:8050'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'scholarmate (+http://www.yourdomain.com)'
@@ -46,16 +47,22 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'scholarmate.middlewares.ScholarmateSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+   # 'scholarmate.middlewares.ScholarmateSpiderMiddleware': 543,
+    'scrapy_splash.SplashDeduplicateArgsMiddleware': 100,
+}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'scholarmate.middlewares.ScholarmateDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+   # 'scholarmate.middlewares.ScholarmateDownloaderMiddleware': 543,
+    'scrapy_splash.SplashCookiesMiddleware': 723,
+    'scrapy_splash.SplashMiddleware': 725,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': 810,
+}
 
+DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
