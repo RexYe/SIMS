@@ -48,11 +48,14 @@ data() {
   methods:{
 	handleClick(row) {
 		// console.log('row:',row);
+	if(window.localStorage){     
+  		localStorage.setItem("uniid", row.uniid);
+  	}
 		this.$router.push({path: '/personalInfo'+'?'+'uniid='+row.uniid})
 	}
   },
   created: function() {
-  	
+
   },
   mounted: function() {
   	const t = this

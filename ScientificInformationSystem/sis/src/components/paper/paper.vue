@@ -1,5 +1,6 @@
 <template>
 	<div class="paper">
+		<router-link :to="/paper2/" ></router-link>
 		<v-header></v-header>
 		<div class="paper-container">
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
@@ -64,6 +65,10 @@ export default {
     'v-header': header,
     'p-header': personalInfoHeader,
     'p-menu': personMenu
+  },
+  beforeCreate: function(){
+  	let uniid = localStorage.getItem("uniid")
+  	this.$router.push({path: '/paper'+'?'+'uniid='+uniid})
   },
   methods: {
   		handleClick(row) {

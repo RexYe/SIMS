@@ -3,10 +3,17 @@ import scrapy
 import json
 from scrapy_splash import SplashRequest
 
+
+
+des3PsnId = 'UPQ2oUMJesA%3D'
+pageNo = 1
+authors = ''
+time = ''
 class ScholarmateSpider(scrapy.Spider):
     name = "scholarmate"
+
     start_urls = [
-        "https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId=UPQ2oUMJesA%3D&page.pageNo=4"
+        "https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId="+des3PsnId+"&page.pageNo="+str(pageNo)
     ]
 
     # def start_requests(self):
@@ -14,28 +21,37 @@ class ScholarmateSpider(scrapy.Spider):
     #         yield SplashRequest(url=url, callback=self.parse, args={'wait': 1}, endpoint='render.html')
 
     def parse(self, response):
+
         """
         The lines below is a spider contract about https://www.scholarmate.com .
         """
-        # print("PARSED", response.real_url, response.url)
-        # print(response.xpath('//div[@class="pub-idx__main"]').extract())
-        # print('res:',response.xpath('//div[@contains(@class,"main-list__item dev_pub_list_div")]'))
         for quote in response.xpath('//div[@class="pub-idx__main"]'):
-            # print('quote:', quote)
+            author_arr = quote.xpath(
+                './/div[@class="pub-idx__main_author dev_pub_author"]/text() | .//div[@class="pub-idx__main_author dev_pub_author"]/strong/text()').extract()
+            global authors
+            for author in author_arr:
+                authors += author
+            # print(authors)
+            # src_str = quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first()
+            # src_arr = src_str.split('，') #中文逗号
+            # last_index = len(src_arr)
+            # time = src_arr[last_index]
+            # source = src_arr[0]
             yield {
-                'title': quote.xpath('.//div[@class="pub-idx__main_title dev_pub_title"]/a/text()').extract_first(),
-                'author': quote.xpath('.//div[@class="pub-idx__main_author dev_pub_author"]/text()').extract_first(),
+                'title': quote.xpath('.//div[@class="pub-idx__main_title dev_pub_title"]/a/text()').extract_first().strip(),
+                'author': authors,
                 'src': quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first()
+                # 'time': time,
+                # 'source': source
             }
-        # for url in response.xpath('//div[@class="list-wrap"]'):
-        #     yield{
-        #         print('url:::', url.xpath('//span/text()').extract_first())
-        #     }
+            authors = ''
 
-        # next_page_url = response.xpath('//div[@class="pub-idx__main"]').extract_first()
-        # print('url:',next_page_url)
-        # if next_page_url is not None:
-        #     yield scrapy.Request(response.urljoin(next_page_url))
+        global pageNo
+        if(pageNo<10):
+            pageNo += 1
+            next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
+                pageNo)
+            print(next_page_url)
+            yield scrapy.Request(response.urljoin(next_page_url))
 
-
-# scrapy crawl scholarmate -o items.json -s FEED_EXPORT_ENCODING=utf-8
+# scrapy crawl scholarmate -o wangwanliang.json -s FEED_EXPORT_ENCODING=utf-8

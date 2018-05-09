@@ -106,7 +106,11 @@ export default {
 	methods: {
 		
 	},
-	mounted: function() {
+	beforeCreate: function() {
+		let uniid = localStorage.getItem("uniid")
+  		this.$router.push({path: '/personalInfo'+'?'+'uniid='+uniid})
+	},
+	created: function() {
 		const t = this
 		DB.Search.get_personalinfo_by_uniid({
 			uniid: this.$route.query.uniid

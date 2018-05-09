@@ -38,6 +38,10 @@ export default {
     'p-menu': personMenu,
     'd-header': dataVisualizationHeader
   },
+    beforeCreate: function(){
+    let uniid = localStorage.getItem("uniid")
+    this.$router.push({path: '/domainDistribution'+'?'+'uniid='+uniid})
+  },
   methods: {
   	  drawPie (id) {
         this.chart = echarts.init(document.getElementById(id), 'roma');
