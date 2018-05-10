@@ -3,8 +3,6 @@ import scrapy
 import json
 from scrapy_splash import SplashRequest
 
-
-
 des3PsnId = 'UPQ2oUMJesA%3D'
 pageNo = 1
 authors = ''
@@ -32,22 +30,24 @@ class ScholarmateSpider(scrapy.Spider):
             for author in author_arr:
                 authors += author
             # print(authors)
-            # src_str = quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first()
-            # src_arr = src_str.split('，') #中文逗号
-            # last_index = len(src_arr)
-            # time = src_arr[last_index]
-            # source = src_arr[0]
+            src_str = quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first()
+            src_arr = src_str.split('，') #中文逗号
+            last_index = len(src_arr)
+            years = src_arr[last_index-1]
+            year = ''.join('.'.join(years.split('.')[::-1]).split()) #时间翻转去空格
+            journal = src_arr[0]
             yield {
                 'title': quote.xpath('.//div[@class="pub-idx__main_title dev_pub_title"]/a/text()').extract_first().strip(),
                 'author': authors,
-                'src': quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first()
-                # 'time': time,
-                # 'source': source
+                # 'src': quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first(),
+                'year': year,
+                'journal': journal,
+                'authors_uniid': des3PsnId
             }
             authors = ''
 
         global pageNo
-        if(pageNo<10):
+        if(pageNo<30):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)

@@ -121,7 +121,7 @@ export default {
 		    t.intro.push(list[0].intro)
 		    let work_experience_arr = list[0].work_experience.split(',')
 		    t.workExperienceData.push({logo:work_experience_arr[1], name:work_experience_arr[0]})
-		    let edu_experience = list[0].work_experience.split(',');
+		    let edu_experience = list[0].edu_experience.split(',');
 		    t.eduExperienceData.push({logo:edu_experience[1], name:edu_experience[0]});
 		    let domains_arr = list[0].domain.split(',');
 		    for (let i=0; i<domains_arr.length ; i++) {

@@ -48,10 +48,12 @@ import header from 'components/header/header'
 import echarts from 'echarts'
 import personalInfoHeader from 'components/personalInfoHeader/personalInfoHeader'
 import personMenu from 'components/personMenu/personMenu'
+import DB from '../../DB/db'
 
 export default {
   data() {
   	return {
+  		pheader: [],
   		paperData: [{
           name: '王小',
           paperInfo: '徐新黎 吕琪 王万良 皇甫晓洁 . 一种带有能量自补给节点的异构传感器网络分簇路由算法. 计算机科学, 2017,     (01): 134-140'
@@ -70,6 +72,16 @@ export default {
   	let uniid = localStorage.getItem("uniid")
   	this.$router.push({path: '/paper'+'?'+'uniid='+uniid})
   },
+  created: function() {
+		const t = this
+		DB.Search.get_personalinfo_by_uniid({
+			uniid: this.$route.query.uniid
+		}).then(result=>{
+		    let { list = [] } = result;
+		    console.log('list',list)
+		    t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
+		})
+	},
   methods: {
   		handleClick(row) {
 		console.log(row);
