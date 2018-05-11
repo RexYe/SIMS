@@ -12,6 +12,14 @@ DBF.create('Search',{
     get_personalinfo_by_uniid:{
         url         :prefix+'/api/get_personalinfo_by_uniid',
         method      :'GET',
+    },
+    get_paper_title_by_uniid:{
+        url         :prefix+'/api/get_paper_title_by_uniid',
+        method      :'GET',
+    },
+    get_paper_detail_by_title:{
+        url         :prefix+'/api/get_paper_detail_by_title',
+        method      :'GET',
     }
     // ,
     // account_register:{

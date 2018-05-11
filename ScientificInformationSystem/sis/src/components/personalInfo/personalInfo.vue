@@ -112,6 +112,7 @@ export default {
 	},
 	created: function() {
 		const t = this
+		console.log('uniid',this.$route)
 		DB.Search.get_personalinfo_by_uniid({
 			uniid: this.$route.query.uniid
 		}).then(result=>{

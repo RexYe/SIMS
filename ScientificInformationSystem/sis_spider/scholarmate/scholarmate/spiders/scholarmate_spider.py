@@ -6,7 +6,9 @@ from scrapy_splash import SplashRequest
 des3PsnId = 'UPQ2oUMJesA%3D'
 pageNo = 1
 authors = ''
+authors2 = ''
 time = ''
+key_words = ''
 class ScholarmateSpider(scrapy.Spider):
     name = "scholarmate"
 
@@ -29,7 +31,6 @@ class ScholarmateSpider(scrapy.Spider):
             global authors
             for author in author_arr:
                 authors += author
-            # print(authors)
             src_str = quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first()
             src_arr = src_str.split('，') #中文逗号
             last_index = len(src_arr)
@@ -40,7 +41,6 @@ class ScholarmateSpider(scrapy.Spider):
             yield {
                 'title': quote.xpath('.//div[@class="pub-idx__main_title dev_pub_title"]/a/text()').extract_first().strip(),
                 'author': authors,
-                # 'src': quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first(),
                 'year': year,
                 'journal': journal,
                 'authors_uniid': des3PsnId,
@@ -48,9 +48,8 @@ class ScholarmateSpider(scrapy.Spider):
             authors = ''
             if detail_url is not None:
                 yield scrapy.Request(detail_url, callback=self.parse_paper_detail)
-
         global pageNo
-        if(pageNo<2):
+        if(pageNo<1):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)
@@ -59,10 +58,22 @@ class ScholarmateSpider(scrapy.Spider):
     # 论文详情页爬虫
     def parse_paper_detail(self, response):
         for quote in response.xpath('//div[@class="detail-pub__box"]'):
+            author_arr2 = quote.xpath(
+                './/div[@class="detail-pub__author"]/span/text() | .//div[@class="detail-pub__author"]/span/strong/text()').extract()
+            global authors2
+            set_of_authorarr = list(set(author_arr2)) #作者去重
+            authors2=';'.join(set_of_authorarr)
+            keywordsArr = quote.xpath('.//div[@class="detail-pub__keyword_content"]/span/text()').extract()
+            global key_words
+            key_words = ';'.join(keywordsArr)
             yield {
                 'title2': quote.xpath('.//div[@class="detail-pub__title"]/text()').extract_first(),
+                'author2': authors2,
                 'abstract': quote.xpath('.//div[@class="detail-pub__abstract_content"]/text()').extract_first(),
-                'keywords': quote.xpath('.//div[@class="detail-pub__keyword_content"]/span/text()').extract(),
+                'key_words': key_words,
+                'src': quote.xpath('.//div[@class="detail-pub__source"]/text()').extract_first(),
+                'authors_uniid2': des3PsnId,
             }
+            authors2 = ''
             # print(quote.xpath('.//div[@class="detail-pub__abstract_content"]/text()').extract_first())
 # scrapy crawl scholarmate -o wangwanliang.json -s FEED_EXPORT_ENCODING=utf-8

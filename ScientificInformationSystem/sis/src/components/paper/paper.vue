@@ -5,7 +5,7 @@
 		<div class="paper-container">
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
 				<el-header>
-					<p-header name='王小' college="浙江工业大学"></p-header>
+					<p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
 			</el-container>
 			<el-container style="height: 500px;  border: 1px solid #eee">
@@ -19,13 +19,23 @@
 			    stripe
 			    style="width: 100%">
 			    <el-table-column
-			      prop="name"
-			      label="姓名"
-			      width="180">
+			      prop="authors"
+			      label="作者"
+			      width="300">
 			    </el-table-column>
 			    <el-table-column
-			      prop="paperInfo"
-			      label="论文信息">
+			      prop="title"
+			      label="题目"
+			      width="400">
+			    </el-table-column>
+			    <el-table-column
+			      prop="journal"
+			      label="期刊">
+			    </el-table-column>
+			    <el-table-column
+			      prop="publish_time"
+			      label="时间"
+			      width="150">
 			    </el-table-column>
 			    <el-table-column
 			      fixed="right"
@@ -54,13 +64,7 @@ export default {
   data() {
   	return {
   		pheader: [],
-  		paperData: [{
-          name: '王小',
-          paperInfo: '徐新黎 吕琪 王万良 皇甫晓洁 . 一种带有能量自补给节点的异构传感器网络分簇路由算法. 计算机科学, 2017,     (01): 134-140'
-        }, {
-          name: '王小',
-          paperInfo: '徐新黎 吕琪 王万良 皇甫晓洁 . 一种带有能量自补给节点的异构传感器网络分簇路由算法. 计算机科学, 2017,     (01): 134-140'
-        }]
+  		paperData: []
   	}
   },
   components: {
@@ -81,12 +85,24 @@ export default {
 		    console.log('list',list)
 		    t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
 		})
-	},
+		DB.Search.get_paper_title_by_uniid({
+			uniid: this.$route.query.uniid
+		}).then(result=>{
+		    let { list = [] } = result;
+		    for(let i=0 ; i<list.length; i++){
+		    	console.log(list[i])
+		    	t.paperData.push(list[i])
+		    }    
+		})
+  },
   methods: {
   		handleClick(row) {
-		console.log(row);
-		this.$router.push({path: '/paperDetail'})
-	}
+			console.log('row',row);
+			if(window.localStorage){     
+  				localStorage.setItem("title", row.title); 
+  			}
+			this.$router.push({path: '/paperDetail'})
+		}
   }
 }
 

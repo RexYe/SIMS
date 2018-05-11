@@ -5,6 +5,7 @@
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
 				<el-header>
 					<p-header name='王小' college="浙江工业大学"></p-header>
+					<!-- <p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header> -->
 				</el-header>
 			</el-container>
 			<el-container style="height: 500px;  border: 1px solid #eee">
@@ -13,10 +14,11 @@
 				</el-aside>
 				<el-main>
 					<div class="paper-details">
-						<p>{{paperName}}</p>
-						<p>作者：</p>
-						<p>单位：</p>
-						<p>关键词：</p>
+						<h1>{{paperDetailData.title}}</h1>
+						<p>{{paperDetailData.src}}</p>
+						<p>{{paperDetailData.authors}}</p>
+						摘要：<p>{{paperDetailData.abstract}}</p>
+						关键词：<p>{{paperDetailData.key_words}}</p>
 					</div>
 				</el-main>
 			</el-container>
@@ -29,20 +31,14 @@ import header from 'components/header/header'
 import echarts from 'echarts'
 import personalInfoHeader from 'components/personalInfoHeader/personalInfoHeader'
 import personMenu from 'components/personMenu/personMenu'
+import DB from '../../DB/db'
 
 export default {
   data() {
   	return {
-  		searchData: [{
-          name: '王小',
-          paperInfo: '徐新黎 吕琪 王万良 皇甫晓洁 . 一种带有能量自补给节点的异构传感器网络分簇路由算法. 计算机科学, 2017,     (01): 134-140'
-        }, {
-          name: '王小',
-          paperInfo: '徐新黎 吕琪 王万良 皇甫晓洁 . 一种带有能量自补给节点的异构传感器网络分簇路由算法. 计算机科学, 2017,     (01): 134-140'
-        }],
-        paperName: '基于网格排序的多目标粒子群优化算法'
+  		pheader: [],
+        paperDetailData:[]
   	}
-
   },
   components: {
     'v-header': header,
@@ -54,7 +50,29 @@ export default {
 		console.log(row);
 		this.$router.push({path: '/personalInfo'})
 	}
-  }
+  },
+   beforeCreate: function(){
+  	let uniid = localStorage.getItem("uniid")
+  	this.$router.push({path: '/paperDetail'+'?'+'uniid='+uniid})
+  },
+  created: function() {
+		const t = this
+		DB.Search.get_personalinfo_by_uniid({
+			uniid: this.$route.query.uniid
+		}).then(result=>{
+		    let { list = [] } = result;
+		    // console.log('list',list)
+		    t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
+		})
+		DB.Search.get_paper_detail_by_title({
+			title: localStorage.getItem("title")
+		}).then(result=>{
+		    let { list = [] } = result;
+		    // console.log(list)
+		    t.paperDetailData = list[0]   
+		})
+		// console.log(t.paperDetailData)
+  },
 }
 
 </script>
