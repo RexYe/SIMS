@@ -36,22 +36,33 @@ class ScholarmateSpider(scrapy.Spider):
             years = src_arr[last_index-1]
             year = ''.join('.'.join(years.split('.')[::-1]).split()) #时间翻转去空格
             journal = src_arr[0]
+            detail_url = quote.xpath('.//div[@class="pub-idx__main_title dev_pub_title"]/a/@href').extract_first()
             yield {
                 'title': quote.xpath('.//div[@class="pub-idx__main_title dev_pub_title"]/a/text()').extract_first().strip(),
                 'author': authors,
                 # 'src': quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first(),
                 'year': year,
                 'journal': journal,
-                'authors_uniid': des3PsnId
+                'authors_uniid': des3PsnId,
             }
             authors = ''
+            if detail_url is not None:
+                yield scrapy.Request(detail_url, callback=self.parse_paper_detail)
 
         global pageNo
-        if(pageNo<30):
+        if(pageNo<2):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)
-            print(next_page_url)
+            # print(next_page_url)
             yield scrapy.Request(response.urljoin(next_page_url))
-
+    # 论文详情页爬虫
+    def parse_paper_detail(self, response):
+        for quote in response.xpath('//div[@class="detail-pub__box"]'):
+            yield {
+                'title2': quote.xpath('.//div[@class="detail-pub__title"]/text()').extract_first(),
+                'abstract': quote.xpath('.//div[@class="detail-pub__abstract_content"]/text()').extract_first(),
+                'keywords': quote.xpath('.//div[@class="detail-pub__keyword_content"]/span/text()').extract(),
+            }
+            # print(quote.xpath('.//div[@class="detail-pub__abstract_content"]/text()').extract_first())
 # scrapy crawl scholarmate -o wangwanliang.json -s FEED_EXPORT_ENCODING=utf-8
