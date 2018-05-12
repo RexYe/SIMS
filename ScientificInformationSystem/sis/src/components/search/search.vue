@@ -5,6 +5,7 @@
 			<div id="search-results-num">检索到{{searchResultsNum}}条结果</div>
 			<div class="search-results">
 				<el-table
+				v-loading="loading"
 			    :data="searchData"
 			    stripe
 			    style="width: 100%">
@@ -36,41 +37,44 @@ import header from 'components/header/header'
 import DB from '../../DB/db'
 
 export default {
-data() {
-	return {
-		searchResultsNum : 0,
-		searchData: []
-	}
-},
-  components: {
-    'v-header': header
-  },
-  methods:{
-	handleClick(row) {
-		// console.log('row:',row);
-	if(window.localStorage){     
-  		localStorage.setItem("uniid", row.uniid);
-  	}
-		this.$router.push({path: '/personalInfo'+'?'+'uniid='+row.uniid})
-	}
-  },
-  created: function() {
-
-  },
-  mounted: function() {
-  	const t = this
-  	t.searchData = [];
-  	t.searchResultsNum = 0;
-	DB.Search.get_authors_by_name({
+	data() {
+		return {
+			searchResultsNum : 0,
+			searchData: [],
+			loading: true
+		}
+	},
+	components: {
+		'v-header': header
+	},
+	methods:{
+		handleClick(row) {
+			if(window.localStorage){     
+				localStorage.setItem("uniid", row.uniid);
+			}
+			this.$router.push({path: '/personalInfo'+'?'+'uniid='+row.uniid})
+		}
+	},
+	beforeCreate: function(){
+		// this.loading = true;
+	},
+	created: function() {
+		// this.loading = true;
+	},
+	mounted: function() {
+		const t = this
+		t.searchData = [];
+		t.searchResultsNum = 0;
+		DB.Search.get_authors_by_name({
 	        name: this.$route.query.name
 	    }).then(result=>{
-	            console.log(result)
-                let { list = [] } = result
-                console.log(list)
-                t.searchData = list
-                t.searchResultsNum = list.length;
+            let { list = [] } = result
+            t.searchData = list
+            t.searchResultsNum = list.length;
+	    }).then(()=>{
+	    	t.loading = false;
 	    })
-  }
+	}
 }
 </script>
 <style scoped>

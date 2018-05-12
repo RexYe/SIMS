@@ -15,7 +15,6 @@ def get_authors_by_name(request):
         name = request.GET['name']
     response = {}
     try:
-        # name = '王万良'
         list = []
         tempList = authors.objects.raw('SELECT * FROM Search_authors WHERE name = %s', [name])
         tempList2 = json.loads(serializers.serialize("json", tempList))
@@ -81,13 +80,11 @@ def get_personalinfo_by_uniid(request):
 def get_paper_title_by_uniid(request):
     if 'uniid' in request.GET:
         uniid = request.GET['uniid']
-        print(uniid)
     response = {}
     try:
         list = []
         tempList = paper_title.objects.raw('SELECT * FROM Search_paper_title WHERE authors_uniid = %s', [uniid])
         tempList2 = json.loads(serializers.serialize("json", tempList))
-        print(22222)
         for i in tempList2:
             list.append({
                 'title': i['fields']['title'],
@@ -131,6 +128,61 @@ def get_paper_detail_by_title(request):
         total = len(list)
         data = {
             'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+@require_http_methods(["GET"])
+def get_interpersonal_relationship_network_by_uniid(request):
+    if 'uniid' in request.GET:
+        uniid = request.GET['uniid']
+    response = {}
+    try:
+        list = []
+        links = []
+        author_list = []
+        author_list_with_name = []
+        mainAuthorList = authors.objects.raw('SELECT * FROM Search_authors WHERE uniid = %s', [uniid])
+        tempList = paper_title.objects.raw('SELECT * FROM Search_paper_title WHERE authors_uniid = %s', [uniid])
+        mainAuthorList2 = json.loads(serializers.serialize("json", mainAuthorList))
+        tempList2 = json.loads(serializers.serialize("json", tempList))
+        authors_all = []
+        for i in mainAuthorList2:
+            mainAuthor = i['fields']['name']
+        for i in tempList2:
+            author = i['fields']['authors'].split('; ')
+            authors_all += author
+        authors_set = set(authors_all)
+        for item in authors_set:
+            list.append({
+                'name': item,
+                'symbolSize': authors_all.count(item)*5,
+                'value': authors_all.count(item),
+                'category': item
+            })
+            links.append({
+                'source': mainAuthor,
+                'target': item
+            })
+            author_list.append(item)
+            author_list_with_name.append({
+                'name': item
+            })
+        total = len(list)
+        data = {
+            'list': list,
+            'links': links,
+            'author_list': author_list,
+            'author_list_with_name': author_list_with_name,
+            'mainAuthor': mainAuthor,
             'total': total
         }
         response['data'] = data

@@ -1,13 +1,13 @@
 <template>
 	<div class="personalInfo">
 		<v-header></v-header>
-		<div class="personalInfo-container">
-			<el-container style="width:100%; height: 180px; border: 1px solid #eee; background-color: #ffd04b">
+		<div class="personalInfo-container" v-loading="loading">
+			<el-container style="width:100%; height: 180px; border: 1px solid #eee; background: #FAFAFA">
 				<el-header>
 					<p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee">
+			<el-container style="height: 100%;  border: 1px solid #eee" >
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <p-menu index="personalInfo"></p-menu>
 				</el-aside>
@@ -95,7 +95,8 @@ export default {
 			keywords: [],
 			workExperienceData:[],
 			eduExperienceData:[],
-			intro: []
+			intro: [],
+			loading: true
 		}
 	},
 	components: {
@@ -132,6 +133,8 @@ export default {
 		    for (let i=0; i<domains_arr.length ; i++) {
 				t.keywords.push({name: domains_arr[i]})
 			}	    
+		}).then(()=>{
+			t.loading = false;
 		})
 	}
 }

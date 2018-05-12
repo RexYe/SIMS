@@ -4,7 +4,8 @@
 		<div class="interpersonalRelationshipNetwork-container">
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
 				<el-header>
-					<p-header name='王小' college="浙江工业大学"></p-header>
+					<!-- <p-header name='王小' college="浙江工业大学"></p-header> -->
+          <p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
 			</el-container>
 			<el-container style="height: 100%;  border: 1px solid #eee">
@@ -26,10 +27,12 @@ import echarts from 'echarts'
 import personalInfoHeader from 'components/personalInfoHeader/personalInfoHeader'
 import personMenu from 'components/personMenu/personMenu'
 import dataVisualizationHeader from 'components/dataVisualization/dataVisualizationHeader'
+import DB from '../../DB/db'
+
 export default {
   data() {
   	return {
-  		
+  		pheader: []
   	}
   },
   components: {
@@ -103,7 +106,17 @@ export default {
 	      }, 100);
 	    }
 	  });
-	}
+	},
+    created: function() {
+    const t = this
+    DB.Search.get_personalinfo_by_uniid({
+      uniid: this.$route.query.uniid
+    }).then(result=>{
+        let { list = [] } = result;
+        t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
+    })
+  },
+
 }
 
 </script>

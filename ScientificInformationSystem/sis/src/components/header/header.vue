@@ -1,6 +1,7 @@
 <template>
     <div class="Header">
-        <div class="Header-container" style="margin-top: 15px;">
+        <img src="../../assets/img/logo.png" height="70" width="70">
+        <div class="Header-container" >
             <el-input placeholder="请输入内容" v-model="searchKey" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择">
                     <el-option label="作者名" value="1"></el-option>
@@ -10,6 +11,9 @@
                 <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
             </el-input>
         </div>
+        <a href="https://github.com/RexYe/SIMS">
+            <i class="el-icon-menu"></i>
+        </a>
     </div>
 </template>
 <style>
@@ -22,10 +26,18 @@
         box-shadow: 1px 1px 5px black;
         z-index: 1000;
         opacity: 0.99;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    img{
+        
     }
     .Header-container{
-        margin: 0 auto;
-        width: 40%;
+        /*margin: 0 auto;*/
+        width: 35%;
+
     }
     .el-select .el-input {
         width: 90px;

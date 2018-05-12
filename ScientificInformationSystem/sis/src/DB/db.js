@@ -20,6 +20,10 @@ DBF.create('Search',{
     get_paper_detail_by_title:{
         url         :prefix+'/api/get_paper_detail_by_title',
         method      :'GET',
+    },
+    get_interpersonal_relationship_network_by_uniid:{
+        url         :prefix+'/api/get_interpersonal_relationship_network_by_uniid',
+        method      :'GET',
     }
     // ,
     // account_register:{

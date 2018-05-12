@@ -16,6 +16,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        
     }
     .personalInfo-header .personal-avatar{
         width: 100px;
@@ -42,6 +43,7 @@
     .personal-world-info #country {
         font-size: 14px;
         color: #8F8B8B;
+
     }
 </style>
 <script>

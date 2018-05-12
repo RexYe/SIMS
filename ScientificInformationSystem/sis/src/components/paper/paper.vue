@@ -2,8 +2,8 @@
 	<div class="paper">
 		<router-link :to="/paper2/" ></router-link>
 		<v-header></v-header>
-		<div class="paper-container">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
+		<div class="paper-container" v-loading="loading">
+			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
 				<el-header>
 					<p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
@@ -64,7 +64,8 @@ export default {
   data() {
   	return {
   		pheader: [],
-  		paperData: []
+  		paperData: [],
+  		loading: true
   	}
   },
   components: {
@@ -93,6 +94,8 @@ export default {
 		    	console.log(list[i])
 		    	t.paperData.push(list[i])
 		    }    
+		}).then(()=>{
+			t.loading = false;
 		})
   },
   methods: {

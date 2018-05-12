@@ -5,6 +5,7 @@
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
 				<el-header>
 					<p-header name='王小' college="浙江工业大学"></p-header>
+                    <!-- <p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header> -->
 				</el-header>
 			</el-container>
 			<el-container style="height: 100%;  border: 1px solid #eee">
@@ -26,153 +27,137 @@ import echarts from 'echarts'
 import personalInfoHeader from 'components/personalInfoHeader/personalInfoHeader'
 import personMenu from 'components/personMenu/personMenu'
 import dataVisualizationHeader from 'components/dataVisualization/dataVisualizationHeader'
+import DB from '../../DB/db'
+
 export default {
-  data() {
-  	return {
-  		
-  	}
-  },
-  components: {
-    'v-header': header,
-    'p-header': personalInfoHeader,
-    'p-menu': personMenu,
-    'd-header': dataVisualizationHeader
-  },
+    data() {
+    	return {
+    		pheader: [],
+            echartsData: [],
+            echartsLinks: [],
+            echartsAuthorList :[],
+            echartsAuthorListWithName: [],
+    	}
+    },
+    components: {
+        'v-header': header,
+        'p-header': personalInfoHeader,
+        'p-menu': personMenu,
+        'd-header': dataVisualizationHeader
+    },
     beforeCreate: function(){
-    let uniid = localStorage.getItem("uniid")
-    this.$router.push({path: '/interpersonalRelationshipNetwork'+'?'+'uniid='+uniid})
-  },
-  methods: {
-  	  drawPie (id) {
-        this.chart = echarts.init(document.getElementById(id), 'roma');
-        this.chart.setOption({
-    //        backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
-    //     offset: 0,
-    //     color: '#f7f8fa'
-    // }, {
-    //     offset: 1,
-    //     color: '#cdd0d5'
-    // }]),
-    title: {
-        text: "人际关系网络",
-        subtext: "YQL",
-        top: "top",
-        left: "center"
+        let uniid = localStorage.getItem("uniid")
+        this.$router.push({path: '/interpersonalRelationshipNetwork'+'?'+'uniid='+uniid})
     },
-    tooltip: {},
-    legend: [{
-        formatter: function(name) {
-            return echarts.format.truncateText(name, 40, '14px Microsoft Yahei', '…');
-        },
-        tooltip: {
-            show: true
-        },
-        selectedMode: 'false',
-        bottom: 20,
-        data: ['王小', '张三', '李四']
-    }],
-    toolbox: {
-        show: true,
-        feature: {
-            dataView: {
-                show: true,
-                readOnly: true
-            },
-            restore: {
-                show: true
-            },
-            saveAsImage: {
-                show: true
-            }
+    methods: {
+        drawPie (id) {
+            this.chart = echarts.init(document.getElementById(id), 'roma');
+            this.chart.setOption({
+                title: {
+                    text: "人际关系网络",
+                    subtext: "YQL",
+                    top: "top",
+                    left: "center"
+                },
+                tooltip: {},
+                legend: [{
+                    formatter: function(name) {
+                        return echarts.format.truncateText(name, 40, '14px Microsoft Yahei', '…');
+                    },
+                    tooltip: {
+                        show: true
+                    },
+                    selectedMode: 'false',
+                    bottom: 20,
+                    data: this.echartsAuthorList
+                }],
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataView: {
+                            show: true,
+                            readOnly: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
+                    }
+                },
+                animationDuration: 3000,
+                animationEasingUpdate: 'quinticInOut',
+                series: [{
+                    name: this.mainAuthor,
+                    type: 'graph',
+                    layout: 'force',
+                    force: {
+                        repulsion: 300
+                    },
+                    data: this.echartsData,
+                    links: this.echartsLinks,
+                    categories: this.echartsAuthorListWithName,
+                    focusNodeAdjacency: true,
+                    roam: true,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: 'source',
+                            curveness: 0,
+                            type: "solid"
+                        }
+                    }
+                }]
+            });
         }
     },
-    animationDuration: 3000,
-    animationEasingUpdate: 'quinticInOut',
-    series: [{
-        name: '王小',
-        type: 'graph',
-        layout: 'force',
-
-        force: {
-            repulsion: 300
-        },
-        data: [{
-            "name": "王小",
-            "symbolSize": 30,
-            "draggable": "true",
-            "value": 27
-
-        }, {
-            "name": "张三",
-            "value": 15,
-            "symbolSize": 10,
-            "category": "张三",
-            "draggable": "true"
-        }, {
-            "name": "李四",
-            "value": 60,
-            "symbolSize": 10,
-            "category": "李四",
-            "draggable": "true"
-        }, {
-            "name": "林五",
-            "symbolSize": 3,
-            "category": "李四",
-            "draggable": "true",
-            "value": 1
-        }],
-        links: [{
-            "source": "王小",
-            "target": "张三"
-        }, {
-            "source": "王小",
-            "target": "李四"
-        }, {
-            "source": "王小",
-            "target": "林五"
-        }],
-        categories: [{
-            'name': '王小'
-        }, {
-            'name': '张三'
-        }, {
-            'name': '李四'
-        },{
-
-        }],
-        focusNodeAdjacency: true,
-        roam: true,
-        label: {
-            normal: {
-                show: true,
-                position: 'top',
-
+    mounted() {
+        console.log('mounted')
+        this.$nextTick(function() {
+            console.log('nexttick')
+            setTimeout(()=>{
+                this.drawPie('charts');
+            },500)
+            var that = this;
+            var resizeTimer = null;
+            window.onresize = function() {
+                if (resizeTimer) clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    that.drawPie('interpersonalRelationshipNetwork');
+                }, 100);
             }
-        },
-        lineStyle: {
-            normal: {
-                color: 'source',
-                curveness: 0,
-                type: "solid"
-            }
-        }
-    }]
         });
-      }
-  },
-	mounted() {
-	  this.$nextTick(function() {
-	    this.drawPie('charts');
-	    var that = this;
-	    var resizeTimer = null;
-	    window.onresize = function() {
-	      if (resizeTimer) clearTimeout(resizeTimer);
-	      resizeTimer = setTimeout(function() {
-	        that.drawPie('interpersonalRelationshipNetwork');
-	      }, 100);
-	    }
-	  });
-	}
+    },
+    created: function() {
+        console.log('cteated')
+        const t = this
+        DB.Search.get_personalinfo_by_uniid({
+            uniid: this.$route.query.uniid
+        }).then(result=>{
+            let { list = [] } = result;
+            t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
+        });
+        DB.Search.get_interpersonal_relationship_network_by_uniid({
+            uniid: this.$route.query.uniid
+        }).then(result=>{
+            let { list = [] } = result;
+            let { links = [] } = result;
+            let { author_list = [] } = result;
+            let { author_list_with_name = [] } = result;
+           
+            t.echartsData = list;
+            t.echartsLinks = links;
+            t.echartsAuthorList = author_list;
+            t.echartsAuthorListWithName = author_list_with_name;
+            t.mainAuthor = result.mainAuthor;
+        })
+    },
 }
 
 </script>
