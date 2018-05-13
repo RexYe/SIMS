@@ -28,7 +28,7 @@ class paper_title(models.Model):
 class paper_detail(models.Model):
     abstract = models.CharField(max_length=600)
     authors = models.CharField(max_length=100)
-    key_words = models.CharField(max_length=100)
+    key_words = models.CharField(max_length=300)
     title = models.CharField(max_length=200)
     src = models.CharField(max_length=200)
     authors_uniid = models.CharField(max_length=200)

@@ -3,7 +3,7 @@ import scrapy
 import json
 from scrapy_splash import SplashRequest
 
-des3PsnId = 'UPQ2oUMJesA%3D'
+des3PsnId = 'gdC9pv0cs%2BsWtCOpJd4RAg'
 pageNo = 1
 authors = ''
 authors2 = ''
@@ -43,13 +43,13 @@ class ScholarmateSpider(scrapy.Spider):
                 'author': authors,
                 'year': year,
                 'journal': journal,
-                'authors_uniid': des3PsnId,
+                'authors_uniid': des3PsnId.replace('%', ''),
             }
             authors = ''
             if detail_url is not None:
                 yield scrapy.Request(detail_url, callback=self.parse_paper_detail)
         global pageNo
-        if(pageNo<1):
+        if(pageNo<7):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)
@@ -72,7 +72,7 @@ class ScholarmateSpider(scrapy.Spider):
                 'abstract': quote.xpath('.//div[@class="detail-pub__abstract_content"]/text()').extract_first(),
                 'key_words': key_words,
                 'src': quote.xpath('.//div[@class="detail-pub__source"]/text()').extract_first(),
-                'authors_uniid2': des3PsnId,
+                'authors_uniid2': des3PsnId.replace('%', ''),
             }
             authors2 = ''
             # print(quote.xpath('.//div[@class="detail-pub__abstract_content"]/text()').extract_first())
