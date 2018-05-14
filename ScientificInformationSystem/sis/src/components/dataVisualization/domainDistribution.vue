@@ -2,7 +2,7 @@
 	<div class="interpersonalRelationshipNetwork">
 		<v-header></v-header>
 		<div class="interpersonalRelationshipNetwork-container">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #ffd04b">
+			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
 				<el-header>
 					<!-- <p-header name='王小' college="浙江工业大学"></p-header> -->
           <p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>

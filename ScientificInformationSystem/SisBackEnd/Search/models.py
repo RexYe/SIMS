@@ -18,16 +18,16 @@ class authors(models.Model):
 
 class paper_title(models.Model):
     title = models.CharField(max_length=200)
-    authors = models.CharField(max_length=100)
-    publish_time = models.CharField(max_length=30)
-    journal = models.CharField(max_length=50)
+    authors = models.CharField(max_length=200)
+    publish_time = models.CharField(max_length=60)
+    journal = models.CharField(max_length=200)
     authors_uniid = models.CharField(max_length=200)
     def __unicode__(self):
         return self.paper_title
 
 class paper_detail(models.Model):
     abstract = models.CharField(max_length=600)
-    authors = models.CharField(max_length=100)
+    authors = models.CharField(max_length=200)
     key_words = models.CharField(max_length=300)
     title = models.CharField(max_length=200)
     src = models.CharField(max_length=200)

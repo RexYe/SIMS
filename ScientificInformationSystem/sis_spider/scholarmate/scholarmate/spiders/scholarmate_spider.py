@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
 import scrapy
+import re
 import json
 from scrapy_splash import SplashRequest
 
-des3PsnId = 'gdC9pv0cs%2BsWtCOpJd4RAg'
+des3PsnId = 'k%2By%2BHpfOQiUIJtkx0NfJ7Q'
 pageNo = 1
 authors = ''
 authors2 = ''
@@ -32,7 +33,7 @@ class ScholarmateSpider(scrapy.Spider):
             for author in author_arr:
                 authors += author
             src_str = quote.xpath('.//div[@class="pub-idx__main_src dev_pub_src"]/text()').extract_first()
-            src_arr = src_str.split('，') #中文逗号
+            src_arr = re.split("，|,", src_str)#中文逗号与英文逗号
             last_index = len(src_arr)
             years = src_arr[last_index-1]
             year = ''.join('.'.join(years.split('.')[::-1]).split()) #时间翻转去空格
@@ -49,7 +50,7 @@ class ScholarmateSpider(scrapy.Spider):
             if detail_url is not None:
                 yield scrapy.Request(detail_url, callback=self.parse_paper_detail)
         global pageNo
-        if(pageNo<7):
+        if(pageNo<1):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)

@@ -164,8 +164,9 @@ def get_interpersonal_relationship_network_by_uniid(request):
         for item in authors_set:
             list.append({
                 'name': item,
-                'symbolSize': authors_all.count(item)*5,
+                'symbolSize': authors_all.count(item)*2,
                 'value': authors_all.count(item),
+                "draggable": "true",
                 'category': item
             })
             links.append({
