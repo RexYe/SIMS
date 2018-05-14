@@ -168,7 +168,7 @@ export default {
 	}
 	.interpersonalRelationshipNetwork-container{
 		height: 900px;
-		margin-top: 70px;
+		margin-top: 60px;
 	}
 	#charts{
 		margin-top: 30px;

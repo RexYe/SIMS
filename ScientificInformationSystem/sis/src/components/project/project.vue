@@ -7,7 +7,7 @@
 					<p-header name='王小' college="浙江工业大学"></p-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 500px;  border: 1px solid #eee">
+			<el-container style="height: 720px;  border: 1px solid #eee">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <p-menu index="project"></p-menu>
 				</el-aside>

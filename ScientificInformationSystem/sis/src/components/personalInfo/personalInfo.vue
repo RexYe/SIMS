@@ -8,7 +8,7 @@
 				</el-header>
 			</el-container>
 			<el-container style="height: 100%;  border: 1px solid #eee" >
-				<el-aside style="font-size: 30px; width: 180px;">
+				<el-aside style="font-size: 30px; width: 160px;">
 					 <p-menu index="personalInfo"></p-menu>
 				</el-aside>
 				<el-main>
@@ -147,7 +147,7 @@ export default {
 	}
 	.personalInfo-container{
 		height: 100%;
-		margin-top: 70px;
+		margin-top: 60px;
 	}
 	.personalInfo-container .resume{
 		display: flex;

@@ -8,7 +8,7 @@
 					<p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 500px;  border: 1px solid #eee">
+			<el-container style="height: 720px;  border: 1px solid #eee">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <p-menu index="paper"></p-menu>
 				</el-aside>
@@ -82,7 +82,7 @@ export default {
 	}
 	.paperDetail-container{
 		height: 900px;
-		margin-top: 70px;
+		margin-top: 60px;
 	}
 	.paper-details{
 		display: flex;

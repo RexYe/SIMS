@@ -19,11 +19,11 @@
 <style>
     .Header{
         width: 100%;
-        height: 70px;
+        height: 60px;
         position: fixed;
         top: 0;
         background: white;
-        box-shadow: 1px 1px 5px black;
+        box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
         z-index: 1000;
         opacity: 0.99;
         display: flex;

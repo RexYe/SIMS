@@ -5,6 +5,7 @@
               background-color="white"
               text-color="black"
               active-text-color="#ffd04b"
+              style="height: 700px"
               router>
              <el-menu-item index="personalInfo">
                 <i class="el-icon-menu"></i>
@@ -26,7 +27,9 @@
     </div>
 </template>
 <style>
+  .person-Menu{
 
+  }
 </style>
 <script>
 export default {
