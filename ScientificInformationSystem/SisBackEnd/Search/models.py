@@ -34,3 +34,11 @@ class paper_detail(models.Model):
     authors_uniid = models.CharField(max_length=200)
     def __unicode__(self):
         return self.paper_detail
+
+class journal(models.Model):
+    name = models.CharField(max_length=100)
+    website = models.CharField(max_length=100)
+    introduction = models.CharField(max_length=800)
+    category = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.journal
