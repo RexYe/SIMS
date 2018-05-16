@@ -24,7 +24,15 @@ DBF.create('Search',{
     get_interpersonal_relationship_network_by_uniid:{
         url         :prefix+'/api/get_interpersonal_relationship_network_by_uniid',
         method      :'GET',
-    }
+    },
+    get_journal_by_name:{
+        url         :prefix+'/api/get_journal_by_name',
+        method      :'GET',
+    },
+    get_paper_by_journal_name:{
+        url         :prefix+'/api/get_paper_by_journal_name',
+        method      :'GET',
+    },
     // ,
     // account_register:{
     //     url         :prefix+'/api/account_register',

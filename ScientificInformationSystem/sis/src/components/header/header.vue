@@ -4,8 +4,8 @@
         <div class="Header-container" >
             <el-input placeholder="请输入内容" v-model="searchKey" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择">
-                    <el-option label="作者名" value="1"></el-option>
-                    <el-option label="论文名" value="2"></el-option>
+                    <el-option label="作者" value="1"></el-option>
+                    <el-option label="期刊" value="2"></el-option>
                     <el-option label="机构" value="3"></el-option>
                 </el-select>
                 <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
@@ -52,16 +52,24 @@ export default {
     data() {
         return {
             searchKey: '',
-            select: ''
+            select: '1'
         }
     },
     created() {},
     methods: {
         search: function() {
-            // console.log('select:',this.select, 'searchKey:',this.searchKey);
             const t = this;
+            console.log('select:',t.select, 'searchKey:',t.searchKey);
             t.query_obj = this.searchKey
-            this.$router.push({path: '/search'+'?'+'name='+t.query_obj})
+            if (t.select == 1) {
+                this.$router.push({path: '/search'+'?'+'name='+t.query_obj});
+            }
+            else if (t.select == 2) {
+                this.$router.push({path: '/searchJournal'+'?'+'name='+t.query_obj});
+            }
+            else if (t.select == 3) {
+                this.$router.push({path: '/searchOrganization'+'?'+'name='+t.query_obj});
+            }
             location.reload();
         }
     }

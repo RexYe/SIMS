@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 import json
 from django.core import serializers
-from .models import authors, paper_detail, paper_title
+from .models import authors, paper_detail, paper_title, journal
 import urllib
 import sys
 import hashlib
@@ -163,20 +163,13 @@ def get_interpersonal_relationship_network_by_uniid(request):
             k_counter = 0
             for k in author:
                 k_counter = k_counter + 1
-                print('k:', author[k_counter-1])
+                # print('k:', author[k_counter-1])
                 for j in range(k_counter, len(author)):
-                    print(j)
+                    # print(j)
                     links.append({
                         'source': author[k_counter - 1],
                         'target': author[j]
                     })
-                # j_counter = 0
-                # for j in author:
-                #     if(j_counter < len(author)-1):
-                #         j_counter = j_counter + 1
-                #         print(author[j_counter])
-
-        # print(links)
         authors_set = set(authors_all)
         item_counter = 0
 
@@ -191,10 +184,6 @@ def get_interpersonal_relationship_network_by_uniid(request):
                 # "draggable": "true",
                 'category': item
             })
-            # links.append({
-            #     'source': mainAuthor,
-            #     'target': item
-            # })
             author_list.append(item)
             author_list_with_name.append({
                 'name': item
@@ -206,6 +195,76 @@ def get_interpersonal_relationship_network_by_uniid(request):
             'author_list': author_list,
             'author_list_with_name': author_list_with_name,
             'mainAuthor': mainAuthor,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_journal_by_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        tempList = journal.objects.raw('SELECT * FROM Search_journal WHERE name = %s', [name])
+        tempList2 = json.loads(serializers.serialize("json", tempList))
+        for i in tempList2:
+            influence = i['fields']['influence'].split(';')
+            list.append({
+                'name': i['fields']['name'],
+                'website': i['fields']['website'],
+                'introduction': i['fields']['introduction'],
+                'category': i['fields']['category'],
+                'logo': i['fields']['logo'],
+                'english_name': i['fields']['english_name'],
+                'host_unit': i['fields']['host_unit'],
+                'complex_influence': influence[0],
+                'comprehensive_influence': influence[1],
+                'honor': i['fields']['honor']
+            })
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_paper_by_journal_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        tempList = paper_title.objects.raw('SELECT * FROM Search_paper_title WHERE journal = %s', [name])
+        tempList2 = json.loads(serializers.serialize("json", tempList))
+        for i in tempList2:
+            list.append({
+                'title': i['fields']['title'],
+                'authors': i['fields']['authors'],
+                'publish_time': i['fields']['publish_time'],
+            })
+        total = len(list)
+        data = {
+            'list': list,
             'total': total
         }
         response['data'] = data

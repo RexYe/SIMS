@@ -40,5 +40,10 @@ class journal(models.Model):
     website = models.CharField(max_length=100)
     introduction = models.CharField(max_length=800)
     category = models.CharField(max_length=30)
+    logo = models.CharField(max_length=100)
+    english_name = models.CharField(max_length=100)
+    host_unit = models.CharField(max_length=100)
+    influence = models.CharField(max_length=20)
+    honor = models.CharField(max_length=50)
     def __unicode__(self):
         return self.journal

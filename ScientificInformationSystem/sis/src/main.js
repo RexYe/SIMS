@@ -5,11 +5,19 @@ import VueRouer from 'vue-router'
 import index from 'components/index/index'
 import personalInfo from 'components/personalInfo/personalInfo'
 import search from 'components/search/search'
+import searchJournal from 'components/search/searchJournal.vue'
+import journalInfo from 'components/journal/index.vue'
+import journalPaper from 'components/journal/journalpaper.vue'
+import journalPublishEveryYear from 'components/journal/journalPublishEveryYear.vue'
+
+import searchOrganization from 'components/search/searchOrganization.vue'
 import interpersonalRelationshipNetwork from 'components/dataVisualization/interpersonalRelationshipNetwork'
 import domainDistribution from 'components/dataVisualization/domainDistribution'
 import paper from 'components/paper/paper'
 import paperDetail from 'components/paper/paperDetail'
 import project from 'components/project/project'
+
+
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -30,6 +38,21 @@ const router = new VueRouer({
   routes: [{
     path: '/search',
     component: search
+  },{
+    path: '/searchJournal',
+    component: searchJournal
+  },{
+    path: '/searchOrganization',
+    component: searchOrganization
+  },{
+    path: '/journalInfo',
+    component: journalInfo
+  },{
+    path: '/journalPaper',
+    component: journalPaper
+  },{
+    path: '/journalPublishEveryYear',
+    component: journalPublishEveryYear
   },{
     path: '/interpersonalRelationshipNetwork',
     component: interpersonalRelationshipNetwork
