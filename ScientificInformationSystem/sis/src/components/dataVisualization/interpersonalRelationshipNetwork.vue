@@ -172,7 +172,7 @@ export default {
 	}
 	#charts{
 		margin-top: 30px;
-		width: 800px;
-		height: 700px;
+		width: 1000px;
+		height: 750px;
 	}
 </style>

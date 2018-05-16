@@ -44,7 +44,6 @@ def get_authors_by_name(request):
 def get_personalinfo_by_uniid(request):
     if 'uniid' in request.GET:
         uniid = request.GET['uniid']
-        # print(uniid)
     response = {}
     try:
         list = []
@@ -159,20 +158,43 @@ def get_interpersonal_relationship_network_by_uniid(request):
             mainAuthor = i['fields']['name']
         for i in tempList2:
             author = i['fields']['authors'].split('; ')
+            print('author:', author)
             authors_all += author
+            k_counter = 0
+            for k in author:
+                k_counter = k_counter + 1
+                print('k:', author[k_counter-1])
+                for j in range(k_counter, len(author)):
+                    print(j)
+                    links.append({
+                        'source': author[k_counter - 1],
+                        'target': author[j]
+                    })
+                # j_counter = 0
+                # for j in author:
+                #     if(j_counter < len(author)-1):
+                #         j_counter = j_counter + 1
+                #         print(author[j_counter])
+
+        # print(links)
         authors_set = set(authors_all)
+        item_counter = 0
+
         for item in authors_set:
+            item_counter = item_counter + 1
+            # print(item_counter)
+            # print(item)
             list.append({
                 'name': item,
                 'symbolSize': authors_all.count(item)*2,
                 'value': authors_all.count(item),
-                "draggable": "true",
+                # "draggable": "true",
                 'category': item
             })
-            links.append({
-                'source': mainAuthor,
-                'target': item
-            })
+            # links.append({
+            #     'source': mainAuthor,
+            #     'target': item
+            # })
             author_list.append(item)
             author_list_with_name.append({
                 'name': item
