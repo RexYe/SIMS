@@ -6,19 +6,27 @@
         <div class="personal-world-info">
             <p id="name">{{name}}</p>
             <p id="english-name">{{english_name}}</p>
-            <a id="website">{{website}}</a>
-
+            <!-- <a id="website">{{website}}</a> -->
             <p id="country"><i class="el-icon-location"></i>中国</p>
         </div>
-        <div v-for = "honor in honor"><img src="../../assets/icon/jiangpai.png" height="22" width="22">{{honor}}</div>
-        <div>
-            复合影响因子：<span>{{complex_influence}}</span>
-            综合影响因子：<span>{{comprehensive_influence}}</span>
+        <div class="honor">
+            <span v-for = "honor in honor" class="honor-item"><img src="../../assets/icon/jiangpai.png" height="22" width="22">{{honor}}</span>
+        </div>
+        <div class="influence">
+            <div class="complex">
+                <span class="title">（2017版）复合影响因子：</span>
+                <span class="no">{{complex_influence}}</span>
+            </div>           
+            <div class="comprehensive">
+                <span class="title">（2017版）综合影响因子：</span>
+                <span class="no">{{comprehensive_influence}}</span>
+            </div>           
         </div>
     </div>
 </template>
 <style>
     .journalInfo-header {
+        padding-left: 20px;
         height: 180px;
         display: flex;
         flex-direction: row;
@@ -39,13 +47,40 @@
         margin-left: 20px;
     }
     .personal-world-info #name {
-        font-size: 40px;
+        font-size: 30px;
         margin-bottom: 15px;
     }
-    .personal-world-info #organization{
+    .personal-world-info #english-name{
         margin-bottom: 8px;
+        color: #8F8B8B;
+        font-size: 14px;
     }
     .personal-world-info #country {
+        margin-top: 26px;
+        font-size: 14px;
+        color: #8F8B8B;
+    }
+    .honor{
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+    }
+    .honor-item{
+        padding: 4px;
+        display: flex;
+        align-items: center;
+    }
+    .influence{
+        padding-left: 80px;
+        display: flex;
+        flex-flow: column;
+    }
+    .influence .title{
+        font-size: 14px;
+    }
+    .influence .no{
         font-size: 14px;
         color: #8F8B8B;
     }
@@ -67,9 +102,8 @@ export default {
     }
   },
   created: function () {
-    this.honor = this.honor.split(';')
+    // this.honor = this.honor.split(';')
     console.log(this.honor)
-
   }
 }
 </script>

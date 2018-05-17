@@ -8,6 +8,7 @@ from .models import authors, paper_detail, paper_title, journal
 import urllib
 import sys
 import hashlib
+from django.db.models import Count
 
 @require_http_methods(["GET"])
 def get_authors_by_name(request):
@@ -261,6 +262,36 @@ def get_paper_by_journal_name(request):
                 'title': i['fields']['title'],
                 'authors': i['fields']['authors'],
                 'publish_time': i['fields']['publish_time'],
+            })
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_journal_publish_every_year_by_journal_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        num = paper_title.objects.filter(journal = name).values_list('publish_time').annotate(Count('id'))
+        for i in num :
+            print(i[0], i[1])
+            list.append({
+                'sum': i[1],
+                'publish_time': i[0],
             })
         total = len(list)
         data = {

@@ -65,7 +65,8 @@ export default {
 		}).then(result=>{
 		    let { list = [] } = result;
 		    // console.log('list',list)
-		    t.jheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, list[0].honor, list[0].complex_influence, list[0].comprehensive_influence)
+		    let honor_arr = list[0].honor.split(';')
+		    t.jheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, honor_arr, list[0].complex_influence, list[0].comprehensive_influence)
 	 		t.intro.push(list[0].introduction)	   
 	 		t.host_unit.push(list[0].host_unit) 
 		}).then(()=>{
@@ -100,9 +101,10 @@ export default {
 	.resume .info{
 		margin-bottom: 20px;
 	}
-	.resume .info #list{
-		font-size: 15px;
+	.resume #info-list{
+		font-size: 16px;
 		color: #6C6A6A;
+		padding: 10px;
 	}
 	.resume .domain{
 		margin-bottom: 20px;

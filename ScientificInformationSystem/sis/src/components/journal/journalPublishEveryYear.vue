@@ -32,7 +32,8 @@ export default {
     data() {
     	return {
     		pheader: [],
-            echartsData: [],
+            echartsYear: [],
+            echartsSum: []
     	}
     },
     components: {
@@ -73,18 +74,18 @@ export default {
                 containLabel: true
             },
             legend: {
-                data: ['增速']
+                data: ['数量']
             },
             xAxis: [{
                 type: 'category',
                 axisTick: {
                     alignWithLabel: true
                 },
-                data: ['2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016']
+                data: this.echartsYear
             }],
             yAxis: [{
                 type: 'value',
-                name: '增速',
+                name: '数量',
                 min: 0,
                 max: 50,
                 position: 'right',
@@ -93,7 +94,7 @@ export default {
                 }
             }],
             series: [{
-                name: '增速',
+                name: '数量',
                 type: 'line',
                 stack: '总量',
                     label: {
@@ -110,7 +111,7 @@ export default {
                             shadowOffsetY: 10
                         }
                     },
-                data: [1,13,37,35,15,13,25,21,6,45,32,2,4,13,6,4,11]
+                data: this.echartsSum
             }]
             });
         }
@@ -135,26 +136,19 @@ export default {
     created: function() {
         console.log('cteated')
         const t = this
-        // DB.Search.get_personalinfo_by_uniid({
-        //     uniid: this.$route.query.uniid
-        // }).then(result=>{
-        //     let { list = [] } = result;
-        //     t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
-        // });
-        // DB.Search.get_interpersonal_relationship_network_by_uniid({
-        //     uniid: this.$route.query.uniid
-        // }).then(result=>{
-        //     let { list = [] } = result;
-        //     let { links = [] } = result;
-        //     let { author_list = [] } = result;
-        //     let { author_list_with_name = [] } = result;
-           
-        //     t.echartsData = list;
-        //     t.echartsLinks = links;
-        //     t.echartsAuthorList = author_list;
-        //     t.echartsAuthorListWithName = author_list_with_name;
-        //     t.mainAuthor = result.mainAuthor;
-        // })
+        DB.Search.get_journal_publish_every_year_by_journal_name({
+            name: this.$route.query.name
+        }).then(result=>{
+            let { list = [] } = result;
+            // console.log(list)
+            list.map(function(index, elem) {
+                t.echartsYear.push(index.publish_time)
+                t.echartsSum.push(index.sum)
+            })
+            // t.echartsYear.push(list[0].publish_time)
+            // t.echartsSum.push(list[0].sum)
+            // t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
+        });
     },
 }
 
