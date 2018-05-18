@@ -9,7 +9,8 @@ import searchJournal from 'components/search/searchJournal.vue'
 import journalInfo from 'components/journal/index.vue'
 import journalPaper from 'components/journal/journalpaper.vue'
 import journalPublishEveryYear from 'components/journal/journalPublishEveryYear.vue'
-
+import journalKeyWord from 'components/journal/journalKeyWord.vue'
+import journalAuthorRank from 'components/journal/journalAuthorRank.vue'
 import searchOrganization from 'components/search/searchOrganization.vue'
 import interpersonalRelationshipNetwork from 'components/dataVisualization/interpersonalRelationshipNetwork'
 import domainDistribution from 'components/dataVisualization/domainDistribution'
@@ -53,6 +54,12 @@ const router = new VueRouer({
   },{
     path: '/journalPublishEveryYear',
     component: journalPublishEveryYear
+  },{
+    path: '/journalKeyWord',
+    component: journalKeyWord
+  },{
+    path: '/journalAuthorRank',
+    component: journalAuthorRank
   },{
     path: '/interpersonalRelationshipNetwork',
     component: interpersonalRelationshipNetwork

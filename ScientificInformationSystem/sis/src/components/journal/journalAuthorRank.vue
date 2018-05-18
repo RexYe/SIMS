@@ -12,7 +12,7 @@
 					 <journal-sidebar index="journalPublishEveryYear"></journal-sidebar>
 				</el-aside>
 				<el-main>
-					<d-header index="journalPublishEveryYear"></d-header>
+					<d-header index="journalAuthorRank"></d-header>
 					<div id="charts"></div>
 				</el-main>
 			</el-container>
@@ -44,75 +44,90 @@ export default {
     },
     beforeCreate: function(){
         let paperName = localStorage.getItem("paperName")
-        this.$router.push({path: '/journalPublishEveryYear'+'?'+'name='+paperName})
+        this.$router.push({path: '/journalAuthorRank'+'?'+'name='+paperName})
     },
     methods: {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-             title: {
-                text: '年度总文献量'
+              backgroundColor: '#00265f',
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: [{
+        type: 'category',
+        data: ['喀什市',
+            '疏附县',
+            '疏勒县',
+            '英吉沙县',
+            '泽普县',
+            '岳普湖县',
+            '巴楚县',
+            '伽师县',
+            '叶城县',
+            '莎车县 ',
+        ],
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: "#063374",
+                width: 1,
+                type: "solid"
+            }
+        },
+        axisTick: {
+            show: false
+        },
+        axisLabel: {
+            show: true,
+            textStyle: {
+                color: "#00c7ff",
+            }
+        },
+    }],
+    yAxis: [{
+        type: 'value',
+        axisLabel: {
+            formatter: '{value} %'
+        },
+        axisLine: {
+            show: false,
+            lineStyle: {
+                color: "#00c7ff",
+                width: 1,
+                type: "solid"
             },
-            tooltip: {
-                trigger: 'axis'
-            },
-            toolbox: {
-                feature: {
-                    dataView: {
-                        show: true,
-                        readOnly: false
-                    },
-                    restore: {
-                        show: true
-                    },
-                    saveAsImage: {
-                        show: true
-                    }
-                }
-            },
-            grid: {
-                containLabel: true
-            },
-            legend: {
-                data: ['数量']
-            },
-            xAxis: [{
-                type: 'category',
-                axisTick: {
-                    alignWithLabel: true
-                },
-                data: this.echartsYear
-            }],
-            yAxis: [{
-                type: 'value',
-                name: '数量',
-                min: 0,
-                max: 50,
-                position: 'left',
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            }],
-            series: [{
-                name: '数量',
-                type: 'line',
-                stack: '总量',
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'top',
-                        }
-                    },
-                lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: 'rgba(0,0,0,0.4)',
-                            shadowBlur: 10,
-                            shadowOffsetY: 10
-                        }
-                    },
-                data: this.echartsSum
-            }]
+        },
+        axisTick: {
+            show: false
+        },
+        splitLine: {
+            lineStyle: {
+                color: "#063374",
+            }
+        }
+    }],
+    series: [{
+        type: 'bar',
+        data: [20, 50, 80, 58, 83, 68, 57, 80, 42, 66],
+        barWidth: 20, //柱子宽度
+        barGap: 1, //柱子之间间距
+        itemStyle: {
+            normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#00fcae'
+                }, {
+                    offset: 1,
+                    color: '#006388'
+                }]),
+                opacity: 1,
+            }
+        }
+    }]
             });
         }
     },
@@ -141,7 +156,7 @@ export default {
         }).then(result=>{
             let { list = [] } = result;
             list.map(function(index, elem) {
-                t.echartsYear.push(index.publish_time)
+                t.echartsAuthor.push(index.auth)
                 t.echartsSum.push(index.sum)
             }) 
         });

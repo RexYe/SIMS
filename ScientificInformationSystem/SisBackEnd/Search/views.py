@@ -8,6 +8,7 @@ from .models import authors, paper_detail, paper_title, journal
 import urllib
 import sys
 import hashlib
+import pymysql
 from django.db.models import Count
 
 @require_http_methods(["GET"])
@@ -159,7 +160,7 @@ def get_interpersonal_relationship_network_by_uniid(request):
             mainAuthor = i['fields']['name']
         for i in tempList2:
             author = i['fields']['authors'].split('; ')
-            print('author:', author)
+            # print('author:', author)
             authors_all += author
             k_counter = 0
             for k in author:
@@ -286,13 +287,60 @@ def get_journal_publish_every_year_by_journal_name(request):
     response = {}
     try:
         list = []
-        num = paper_title.objects.filter(journal = name).values_list('publish_time').annotate(Count('id'))
+        num = paper_title.objects.filter(journal = name).values_list('publish_time').annotate(Count('id')).order_by('publish_time')
         for i in num :
             print(i[0], i[1])
             list.append({
                 'sum': i[1],
                 'publish_time': i[0],
             })
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_journal_keyword_by_journal_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'SELECT DISTINCT d.title, d.key_words from search_paper_detail d JOIN ' \
+              'search_paper_title t ON d.title = t.title WHERE t.journal = %s;'
+        param = (name)
+        cursor.execute(sql, param)
+        sql_result = cursor.fetchall()
+        keyword_all_arr = []
+        for i in sql_result:
+            keyword_all_arr = keyword_all_arr + i[1].split(';')
+        # print(keyword_all_arr)
+        keyword_set_arr = set(keyword_all_arr)
+        for item in keyword_set_arr:
+            # 统计关键词重复次数
+            # print(item, keyword_all_arr.count(item))
+            list.append({
+                'keyword': item,
+                'sum': keyword_all_arr.count(item)
+            })
+        list = sorted(list, key=lambda x: (-x['sum']))
+        if (len(list)> 10):
+            list = list[:10]
+        db.close();
         total = len(list)
         data = {
             'list': list,

@@ -12,7 +12,7 @@
 					 <journal-sidebar index="journalPublishEveryYear"></journal-sidebar>
 				</el-aside>
 				<el-main>
-					<d-header index="journalPublishEveryYear"></d-header>
+					<d-header index="journalKeyWord"></d-header>
 					<div id="charts"></div>
 				</el-main>
 			</el-container>
@@ -32,7 +32,7 @@ export default {
     data() {
     	return {
     		pheader: [],
-            echartsYear: [],
+            echartsKeyword: [],
             echartsSum: []
     	}
     },
@@ -44,75 +44,81 @@ export default {
     },
     beforeCreate: function(){
         let paperName = localStorage.getItem("paperName")
-        this.$router.push({path: '/journalPublishEveryYear'+'?'+'name='+paperName})
+        this.$router.push({path: '/journalKeyWord'+'?'+'name='+paperName})
     },
     methods: {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-             title: {
-                text: '年度总文献量'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            toolbox: {
-                feature: {
-                    dataView: {
-                        show: true,
-                        readOnly: false
-                    },
-                    restore: {
-                        show: true
-                    },
-                    saveAsImage: {
-                        show: true
-                    }
-                }
-            },
-            grid: {
-                containLabel: true
-            },
-            legend: {
-                data: ['数量']
-            },
-            xAxis: [{
-                type: 'category',
-                axisTick: {
-                    alignWithLabel: true
+               backgroundColor: '#00265f',
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
                 },
-                data: this.echartsYear
-            }],
-            yAxis: [{
-                type: 'value',
-                name: '数量',
-                min: 0,
-                max: 50,
-                position: 'left',
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            }],
-            series: [{
-                name: '数量',
-                type: 'line',
-                stack: '总量',
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'top',
+                xAxis: [{
+                    type: 'category',
+                    data: this.echartsKeyword,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: "#063374",
+                            width: 1,
+                            type: "solid"
                         }
                     },
-                lineStyle: {
-                        normal: {
-                            width: 3,
-                            shadowColor: 'rgba(0,0,0,0.4)',
-                            shadowBlur: 10,
-                            shadowOffsetY: 10
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: "#00c7ff",
                         }
                     },
-                data: this.echartsSum
-            }]
+                }],
+                yAxis: [{
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value}'
+                    },
+                    axisLine: {
+                        show: false,
+                        lineStyle: {
+                            color: "#00c7ff",
+                            width: 1,
+                            type: "solid"
+                        },
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: "#063374",
+                        }
+                    }
+                }],
+                series: [{
+                    type: 'bar',
+                    data: this.echartsSum,
+                    barWidth: 20, //柱子宽度
+                    barGap: 20, //柱子之间间距
+                   
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: '#00fcae'
+                            }, {
+                                offset: 1,
+                                color: '#006388'
+                            }]),
+                            opacity: 1,
+                        }
+                    }
+                }]
             });
         }
     },
@@ -136,12 +142,12 @@ export default {
     created: function() {
         console.log('cteated')
         const t = this
-        DB.Search.get_journal_publish_every_year_by_journal_name({
+        DB.Search.get_journal_keyword_by_journal_name({
             name: this.$route.query.name
         }).then(result=>{
             let { list = [] } = result;
             list.map(function(index, elem) {
-                t.echartsYear.push(index.publish_time)
+                t.echartsKeyword.push(index.keyword)
                 t.echartsSum.push(index.sum)
             }) 
         });

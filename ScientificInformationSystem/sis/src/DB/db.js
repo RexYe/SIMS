@@ -32,8 +32,13 @@ DBF.create('Search',{
     get_paper_by_journal_name:{
         url         :prefix+'/api/get_paper_by_journal_name',
         method      :'GET',
-    },    get_journal_publish_every_year_by_journal_name:{
+    },    
+    get_journal_publish_every_year_by_journal_name:{
         url         :prefix+'/api/get_journal_publish_every_year_by_journal_name',
+        method      :'GET',
+    },
+    get_journal_keyword_by_journal_name:{
+        url         :prefix+'/api/get_journal_keyword_by_journal_name',
         method      :'GET',
     },
     // ,
