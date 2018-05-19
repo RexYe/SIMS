@@ -12,7 +12,7 @@
 					 <organization-sidebar index="organizationPublishEveryYear"></organization-sidebar>
 				</el-aside>
 				<el-main>
-					<d-header index="journalAuthorRank"></d-header>
+					<d-header index="organizationAuthorRank"></d-header>
 					<div id="charts"></div>
 				</el-main>
 			</el-container>
@@ -32,7 +32,7 @@ export default {
     data() {
     	return {
     		pheader: [],
-            echartsYear: [],
+            echartsAuthor: [],
             echartsSum: []
     	}
     },
@@ -59,17 +59,7 @@ export default {
     },
     xAxis: [{
         type: 'category',
-        data: ['喀什市',
-            '疏附县',
-            '疏勒县',
-            '英吉沙县',
-            '泽普县',
-            '岳普湖县',
-            '巴楚县',
-            '伽师县',
-            '叶城县',
-            '莎车县 ',
-        ],
+        data: this.echartsAuthor,
         axisLine: {
             show: true,
             lineStyle: {
@@ -91,7 +81,7 @@ export default {
     yAxis: [{
         type: 'value',
         axisLabel: {
-            formatter: '{value} %'
+            formatter: '{value}'
         },
         axisLine: {
             show: false,
@@ -112,7 +102,7 @@ export default {
     }],
     series: [{
         type: 'bar',
-        data: [20, 50, 80, 58, 83, 68, 57, 80, 42, 66],
+        data: this.echartsSum,
         barWidth: 20, //柱子宽度
         barGap: 1, //柱子之间间距
         itemStyle: {
@@ -132,9 +122,7 @@ export default {
         }
     },
     mounted() {
-        console.log('mounted')
         this.$nextTick(function() {
-            console.log('nexttick')
             setTimeout(()=>{
                 this.drawPie('charts');
             },500)
@@ -149,14 +137,13 @@ export default {
         });
     },
     created: function() {
-        console.log('cteated')
         const t = this
-        DB.Search.get_journal_publish_every_year_by_journal_name({
+        DB.Search.get_organization_author_rank_by_organization_name({
             name: this.$route.query.name
         }).then(result=>{
             let { list = [] } = result;
             list.map(function(index, elem) {
-                t.echartsAuthor.push(index.auth)
+                t.echartsAuthor.push(index.author)
                 t.echartsSum.push(index.sum)
             }) 
         });

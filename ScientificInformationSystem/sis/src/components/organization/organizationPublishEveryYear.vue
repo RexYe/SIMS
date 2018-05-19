@@ -87,7 +87,7 @@ export default {
                 type: 'value',
                 name: '数量',
                 min: 0,
-                max: 50,
+                max: this.yAxisMax,
                 position: 'left',
                 axisLabel: {
                     formatter: '{value}'
@@ -117,9 +117,7 @@ export default {
         }
     },
     mounted() {
-        console.log('mounted')
         this.$nextTick(function() {
-            console.log('nexttick')
             setTimeout(()=>{
                 this.drawPie('charts');
             },500)
@@ -134,14 +132,15 @@ export default {
         });
     },
     created: function() {
-        console.log('cteated')
         const t = this
-        DB.Search.get_journal_publish_every_year_by_journal_name({
+        DB.Search.get_organization_publish_every_year_by_organization_name({
             name: this.$route.query.name
         }).then(result=>{
+            //总坐标最大值为最大发表量适当加10
+            t.yAxisMax = result.max + 10
             let { list = [] } = result;
             list.map(function(index, elem) {
-                t.echartsYear.push(index.publish_time)
+                t.echartsYear.push(index.year)
                 t.echartsSum.push(index.sum)
             }) 
         });

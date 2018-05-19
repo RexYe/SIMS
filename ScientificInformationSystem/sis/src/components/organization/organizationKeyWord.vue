@@ -9,10 +9,10 @@
 			</el-container>
 			<el-container style="height: 100%;  border: 1px solid #eee">
 				<el-aside style="font-size: 30px; width: 180px;">
-					 <journal-sidebar index="journalPublishEveryYear"></journal-sidebar>
+					  <organization-sidebar index="organizationPublishEveryYear"></organization-sidebar>
 				</el-aside>
 				<el-main>
-					<d-header index="journalKeyWord"></d-header>
+					<d-header index="organizationKeyWord"></d-header>
 					<div id="charts"></div>
 				</el-main>
 			</el-container>
@@ -23,9 +23,9 @@
 <script>
 import header from 'components/header/header'
 import echarts from 'echarts'
-import journalMenu from 'components/journal/journalMenu'
-import journalInfoHeader from 'components/journal/journalInfoHeader'
-import journalDataVisualizationHeader from 'components/journal/journalDataVisualizationHeader'
+import organizationMenu from 'components/organization/organizationMenu'
+import organizationInfoHeader from 'components/organization/organizationInfoHeader'
+import organizationDataVisualizationHeader from 'components/organization/organizationDataVisualizationHeader'
 import DB from '../../DB/db'
 
 export default {
@@ -38,9 +38,9 @@ export default {
     },
     components: {
         'v-header': header,
-        'journal-sidebar': journalMenu,
-        'journalinfo-header': journalInfoHeader,
-        'd-header': journalDataVisualizationHeader
+        'organization-sidebar': organizationMenu,
+        'organization-header': organizationInfoHeader,
+        'd-header': organizationDataVisualizationHeader
     },
     beforeCreate: function(){
         let organizationName = localStorage.getItem("organizationName")
@@ -58,27 +58,6 @@ export default {
                     containLabel: true
                 },
                 xAxis: [{
-                    type: 'category',
-                    data: this.echartsKeyword,
-                    axisLine: {
-                        show: true,
-                        lineStyle: {
-                            color: "#063374",
-                            width: 1,
-                            type: "solid"
-                        }
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: true,
-                        textStyle: {
-                            color: "#00c7ff",
-                        }
-                    },
-                }],
-                yAxis: [{
                     type: 'value',
                     axisLabel: {
                         formatter: '{value}'
@@ -100,6 +79,27 @@ export default {
                         }
                     }
                 }],
+                yAxis: [{
+                    type: 'category',
+                    data: this.echartsKeyword,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: "#063374",
+                            width: 1,
+                            type: "solid"
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: "#00c7ff",
+                        }
+                    },
+                }],
                 series: [{
                     type: 'bar',
                     data: this.echartsSum,
@@ -108,7 +108,7 @@ export default {
                    
                     itemStyle: {
                         normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
                                 offset: 0,
                                 color: '#00fcae'
                             }, {
@@ -116,16 +116,18 @@ export default {
                                 color: '#006388'
                             }]),
                             opacity: 1,
-                        }
+                            barBorderRadius: 7
+                        },
+                        emphasis: {
+                            barBorderRadius: 7
+                        },
                     }
                 }]
             });
         }
     },
     mounted() {
-        console.log('mounted')
         this.$nextTick(function() {
-            console.log('nexttick')
             setTimeout(()=>{
                 this.drawPie('charts');
             },500)
@@ -140,9 +142,8 @@ export default {
         });
     },
     created: function() {
-        console.log('cteated')
         const t = this
-        DB.Search.get_journal_keyword_by_journal_name({
+        DB.Search.get_organization_keyword_by_organization_name({
             name: this.$route.query.name
         }).then(result=>{
             let { list = [] } = result;

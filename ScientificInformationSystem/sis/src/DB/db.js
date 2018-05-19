@@ -49,6 +49,18 @@ DBF.create('Search',{
         url         :prefix+'/api/get_paper_by_organization_name',
         method      :'GET',
     },
+    get_organization_keyword_by_organization_name:{
+        url         :prefix+'/api/get_organization_keyword_by_organization_name',
+        method      :'GET',
+    },
+    get_organization_author_rank_by_organization_name:{
+        url         :prefix+'/api/get_organization_author_rank_by_organization_name',
+        method      :'GET',
+    },
+    get_organization_publish_every_year_by_organization_name:{
+        url         :prefix+'/api/get_organization_publish_every_year_by_organization_name',
+        method      :'GET',
+    },
     // ,
     // account_register:{
     //     url         :prefix+'/api/account_register',

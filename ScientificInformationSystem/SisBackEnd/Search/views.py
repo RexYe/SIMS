@@ -471,3 +471,128 @@ def get_paper_by_organization_name(request):
         response['error_num'] = 1
 
     return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_organization_publish_every_year_by_organization_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'SELECT COUNT(p.title) , p.publish_time FROM search_paper_title p JOIN search_authors a ' \
+              'ON p.authors_uniid = a.uniid  where a.organization = %s GROUP BY p.publish_time ORDER BY p.publish_time'
+        param = (name)
+        cursor.execute(sql, param)
+        sql_result = cursor.fetchall()
+        for i in sql_result:
+            list.append({
+                'year': i[1],
+                'sum': i[0]
+            })
+        listMaxYear = sorted(list, key=lambda x: (-x['sum']))
+        max = listMaxYear[0]['sum']
+        total = len(list)
+        data = {
+            'list': list,
+            #获取发表最多一年的值，利于坐标的上限取值
+            'max': max,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_organization_keyword_by_organization_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        authorList = authors.objects.raw('SELECT * FROM Search_authors WHERE organization = %s', [name])
+        authorList2 = json.loads(serializers.serialize("json", authorList))
+        keyword_all_arr = []
+        for i in authorList2:
+            authors_uniid = i['fields']['uniid']
+            paperList = paper_detail.objects.raw('SELECT * FROM Search_paper_detail WHERE authors_uniid = %s', [authors_uniid])
+            paperList2 = json.loads(serializers.serialize("json", paperList))
+
+            for i in paperList2:
+                keyword_all_arr = keyword_all_arr + i['fields']['key_words'].split(';')
+        for x in range(keyword_all_arr.count('')):
+            keyword_all_arr.remove('')
+        keyword_set_arr = set(keyword_all_arr)
+        for item in keyword_set_arr:
+            # 统计关键词重复次数
+            list.append({
+                'keyword': item,
+                'sum': keyword_all_arr.count(item)
+            })
+        list = sorted(list, key=lambda x: (-x['sum']))
+        if (len(list) > 10):
+            list = list[:10]
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+
+@require_http_methods(["GET"])
+def get_organization_author_rank_by_organization_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'SELECT COUNT(p.title ), a.name FROM search_paper_title p JOIN search_authors a ' \
+              'ON p.authors_uniid = a.uniid  where a.organization = %s GROUP BY a.`name`'
+        param = (name)
+        cursor.execute(sql, param)
+        sql_result = cursor.fetchall()
+        for i in sql_result:
+            list.append({
+                'author': i[1],
+                'sum': i[0]
+            })
+        list = sorted(list, key=lambda x: (-x['sum']))
+        if (len(list) > 10):
+            list = list[:10]
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
