@@ -355,3 +355,50 @@ def get_journal_keyword_by_journal_name(request):
         response['error_num'] = 1
 
     return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_journal_author_rank_by_journal_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'SELECT DISTINCT d.title, d.key_words from search_paper_detail d JOIN ' \
+              'search_paper_title t ON d.title = t.title WHERE t.journal = %s;'
+        param = (name)
+        cursor.execute(sql, param)
+        sql_result = cursor.fetchall()
+        keyword_all_arr = []
+        for i in sql_result:
+            keyword_all_arr = keyword_all_arr + i[1].split(';')
+        # print(keyword_all_arr)
+        keyword_set_arr = set(keyword_all_arr)
+        for item in keyword_set_arr:
+            # 统计关键词重复次数
+            # print(item, keyword_all_arr.count(item))
+            list.append({
+                'keyword': item,
+                'sum': keyword_all_arr.count(item)
+            })
+        list = sorted(list, key=lambda x: (-x['sum']))
+        if (len(list)> 10):
+            list = list[:10]
+        db.close();
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
