@@ -60,7 +60,7 @@ export default {
 	methods:{
 		handleClick(row) {
 			if(window.localStorage){     
-				localStorage.setItem("paperName", row.name);
+				localStorage.setItem("journalName", row.name);
 			}
 			this.$router.push({path: '/journalInfo'+'?'+'name='+row.name})
 		}

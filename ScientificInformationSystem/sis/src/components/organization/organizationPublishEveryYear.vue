@@ -4,15 +4,15 @@
 		<div class="interpersonalRelationshipNetwork-container">
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
 				<el-header>
-					
+					<!-- <organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header> -->
 				</el-header>
 			</el-container>
 			<el-container style="height: 100%;  border: 1px solid #eee">
 				<el-aside style="font-size: 30px; width: 180px;">
-					 <journal-sidebar index="journalPublishEveryYear"></journal-sidebar>
+                    <organization-sidebar index="organizationPublishEveryYear"></organization-sidebar>
 				</el-aside>
 				<el-main>
-					<d-header index="journalPublishEveryYear"></d-header>
+					<d-header index="organizationPublishEveryYear"></d-header>
 					<div id="charts"></div>
 				</el-main>
 			</el-container>
@@ -23,9 +23,9 @@
 <script>
 import header from 'components/header/header'
 import echarts from 'echarts'
-import journalMenu from 'components/journal/journalMenu'
-import journalInfoHeader from 'components/journal/journalInfoHeader'
-import journalDataVisualizationHeader from 'components/journal/journalDataVisualizationHeader'
+import organizationMenu from 'components/organization/organizationMenu'
+import organizationInfoHeader from 'components/organization/organizationInfoHeader'
+import organizationDataVisualizationHeader from 'components/organization/organizationDataVisualizationHeader'
 import DB from '../../DB/db'
 
 export default {
@@ -38,13 +38,13 @@ export default {
     },
     components: {
         'v-header': header,
-        'journal-sidebar': journalMenu,
-        'journalinfo-header': journalInfoHeader,
-        'd-header': journalDataVisualizationHeader
+        'organization-sidebar': organizationMenu,
+        'organization-header': organizationInfoHeader,
+        'd-header': organizationDataVisualizationHeader
     },
     beforeCreate: function(){
-        let journalName = localStorage.getItem("journalName")
-        this.$router.push({path: '/journalPublishEveryYear'+'?'+'name='+journalName})
+        let organizationName = localStorage.getItem("organizationName")
+        this.$router.push({path: '/organizationPublishEveryYear'+'?'+'name='+organizationName})
     },
     methods: {
         drawPie (id) {

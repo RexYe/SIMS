@@ -11,5 +11,6 @@ urlpatterns = [
     path('get_journal_publish_every_year_by_journal_name', views.get_journal_publish_every_year_by_journal_name, ),
     path('get_journal_keyword_by_journal_name', views.get_journal_keyword_by_journal_name, ),
     path('get_journal_author_rank_by_journal_name', views.get_journal_author_rank_by_journal_name, ),
-
+    path('get_organization_by_name', views.get_organization_by_name, ),
+    path('get_paper_by_organization_name', views.get_paper_by_organization_name, ),
 ]

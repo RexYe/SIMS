@@ -19,8 +19,12 @@
 			      width="180">
 			    </el-table-column>
 			    <el-table-column
-			      prop="organization"
-			      label="机构">
+			      prop="location"
+			      label="地址">
+			    </el-table-column>
+			    <el-table-column
+			      prop="website"
+			      label="网址">
 			    </el-table-column>
 			    <el-table-column
 			      fixed="right"
@@ -54,9 +58,9 @@ export default {
 	methods:{
 		handleClick(row) {
 			if(window.localStorage){     
-				localStorage.setItem("uniid", row.uniid);
+				localStorage.setItem("organizationName", row.name);
 			}
-			this.$router.push({path: '/personalInfo'+'?'+'uniid='+row.uniid})
+			this.$router.push({path: '/organizationInfo'+'?'+'name='+row.name})
 		}
 	},
 	beforeCreate: function(){
@@ -69,7 +73,7 @@ export default {
 		const t = this
 		t.searchData = [];
 		t.searchResultsNum = 0;
-		DB.Search.get_authors_by_name({
+		DB.Search.get_organization_by_name({
 	        name: this.$route.query.name
 	    }).then(result=>{
             let { list = [] } = result

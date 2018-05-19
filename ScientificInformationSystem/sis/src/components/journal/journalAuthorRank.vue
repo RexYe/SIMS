@@ -43,8 +43,8 @@ export default {
         'd-header': journalDataVisualizationHeader
     },
     beforeCreate: function(){
-        let paperName = localStorage.getItem("paperName")
-        this.$router.push({path: '/journalAuthorRank'+'?'+'name='+paperName})
+        let journalName = localStorage.getItem("journalName")
+        this.$router.push({path: '/journalAuthorRank'+'?'+'name='+journalName})
     },
     methods: {
         drawPie (id) {

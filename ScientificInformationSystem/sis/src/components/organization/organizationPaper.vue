@@ -4,12 +4,12 @@
 		<div class="paper-container" v-loading="loading">
 			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
 				<el-header>
-					
+					<!-- <organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header> -->
 				</el-header>
 			</el-container>
 			<el-container style="height: 720px;  border: 1px solid #eee">
 				<el-aside style="font-size: 30px; width: 180px;">
-					 <journal-sidebar index="journalPaper"></journal-sidebar>
+					 <organization-sidebar index="organizationPaper"></organization-sidebar>
 				</el-aside>
 				<el-main>
 					<div class="paper-results">
@@ -50,7 +50,7 @@
 						      :page-sizes="[5, 10, 20, 30]"
 						      :page-size="10"
 						      layout="total, sizes, prev, pager, next, jumper"
-						      :total="paperData.length">
+						      :total=this.pageTotal>
 						    </el-pagination>
 			  			</div>
 					</div>
@@ -62,44 +62,43 @@
 
 <script>
 import header from 'components/header/header'
-import journalMenu from 'components/journal/journalMenu'
-import journalInfoHeader from 'components/journal/journalInfoHeader'
+import organizationMenu from 'components/organization/organizationMenu'
+import organizationInfoHeader from 'components/organization/organizationInfoHeader'
 import DB from '../../DB/db'
 
 export default {
   data() {
   	return {
-  		pheader: [],
+  		oheader: [],
   		paperData: [],
   		loading: true,
   		currentPage: 1,
-        pagesize: 10
+        pagesize: 10,
   	}
   },
   components: {
     'v-header': header,
-    'journal-sidebar': journalMenu,
-	'journalinfo-header': journalInfoHeader
+    'organization-sidebar': organizationMenu,
+	'organization-header': organizationInfoHeader
   },
   beforeCreate: function(){
-  	let journalName = localStorage.getItem("journalName")
-  	this.$router.push({path: '/journalPaper'+'?'+'name='+journalName})
+  	let organizationName = localStorage.getItem("organizationName")
+  	this.$router.push({path: '/organizationPaper'+'?'+'name='+organizationName})
   },
   created: function() {
 		const t = this
-		// DB.Search.get_personalinfo_by_uniid({
-		// 	uniid: this.$route.query.uniid
-		// }).then(result=>{
-		//     let { list = [] } = result;
-		//     console.log('list',list)
-		//     t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
-		// })
-		DB.Search.get_paper_by_journal_name({
+		DB.Search.get_organization_by_name({
 			name: this.$route.query.name
 		}).then(result=>{
 		    let { list = [] } = result;
+		   	t.oheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, list[0].location)
+		})
+		DB.Search.get_paper_by_organization_name({
+			name: this.$route.query.name
+		}).then(result=>{
+			t.pageTotal = result.total
+		    let { list = [] } = result;
 		    for(let i=0 ; i<list.length; i++){
-		    	console.log(list[i])
 		    	t.paperData.push(list[i])
 		    }    
 		}).then(()=>{

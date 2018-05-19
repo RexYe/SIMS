@@ -11,6 +11,11 @@ import journalPaper from 'components/journal/journalpaper.vue'
 import journalPublishEveryYear from 'components/journal/journalPublishEveryYear.vue'
 import journalKeyWord from 'components/journal/journalKeyWord.vue'
 import journalAuthorRank from 'components/journal/journalAuthorRank.vue'
+import organizationInfo from 'components/organization/index.vue'
+import organizationPaper from 'components/organization/organizationPaper.vue'
+import organizationPublishEveryYear from 'components/organization/organizationPublishEveryYear.vue'
+import organizationKeyWord from 'components/organization/organizationKeyWord.vue'
+import organizationAuthorRank from 'components/organization/organizationAuthorRank.vue'
 import searchOrganization from 'components/search/searchOrganization.vue'
 import interpersonalRelationshipNetwork from 'components/dataVisualization/interpersonalRelationshipNetwork'
 import domainDistribution from 'components/dataVisualization/domainDistribution'
@@ -60,6 +65,21 @@ const router = new VueRouer({
   },{
     path: '/journalAuthorRank',
     component: journalAuthorRank
+  },{
+    path: '/organizationInfo',
+    component: organizationInfo
+  },{
+    path: '/organizationPaper',
+    component: organizationPaper
+  },{
+    path: '/organizationPublishEveryYear',
+    component: organizationPublishEveryYear
+  },{
+    path: '/organizationKeyWord',
+    component: organizationKeyWord
+  },{
+    path: '/organizationAuthorRank',
+    component: organizationAuthorRank
   },{
     path: '/interpersonalRelationshipNetwork',
     component: interpersonalRelationshipNetwork

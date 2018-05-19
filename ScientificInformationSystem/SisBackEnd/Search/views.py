@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 import json
 from django.core import serializers
-from .models import authors, paper_detail, paper_title, journal
+from .models import authors, paper_detail, paper_title, journal, organization
 import urllib
 import sys
 import hashlib
@@ -388,6 +388,75 @@ def get_journal_author_rank_by_journal_name(request):
         if (len(list)> 10):
             list = list[:10]
         db.close();
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_organization_by_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        tempList = organization.objects.raw('SELECT * FROM Search_organization WHERE name = %s', [name])
+        tempList2 = json.loads(serializers.serialize("json", tempList))
+        for i in tempList2:
+            list.append({
+                'name': i['fields']['name'],
+                'english_name': i['fields']['english_name'],
+                'logo': i['fields']['logo'],
+                'website': i['fields']['website'],
+                'introduction': i['fields']['introduction'],
+                'location': i['fields']['location'],
+            })
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def get_paper_by_organization_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list = []
+        authorList = authors.objects.raw('SELECT * FROM Search_authors WHERE organization = %s', [name])
+        authorList2 = json.loads(serializers.serialize("json", authorList))
+        for i in authorList2:
+            authors_uniid = i['fields']['uniid']
+            paperList = paper_title.objects.raw('SELECT * FROM Search_paper_title WHERE authors_uniid = %s', [authors_uniid])
+            paperList2 = json.loads(serializers.serialize("json", paperList))
+            for i in paperList2:
+                list.append({
+                    'title': i['fields']['title'],
+                    'authors': i['fields']['authors'],
+                    'publish_time': i['fields']['publish_time'],
+                })
         total = len(list)
         data = {
             'list': list,

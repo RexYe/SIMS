@@ -47,3 +47,11 @@ class journal(models.Model):
     honor = models.CharField(max_length=50)
     def __unicode__(self):
         return self.journal
+
+class organization(models.Model):
+    name = models.CharField(max_length=100)
+    english_name = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    logo = models.CharField(max_length=100)
+    website = models.CharField(max_length=100)
+    introduction = models.CharField(max_length=500)
