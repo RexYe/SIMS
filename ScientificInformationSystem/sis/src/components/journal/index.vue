@@ -54,8 +54,8 @@ export default {
 		
 	},
 	beforeCreate: function() {
-		let paperName = localStorage.getItem("paperName")
-  		this.$router.push({path: '/journalInfo'+'?'+'name='+paperName})
+		let journalName = localStorage.getItem("journalName")
+  		this.$router.push({path: '/journalInfo'+'?'+'name='+journalName})
 	},
 	created: function() {
 		const t = this
