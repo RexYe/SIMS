@@ -2,8 +2,8 @@
     <div class="journal-Menu">
          <el-menu
               :default-active="index"
-              background-color="white"
-              text-color="black"
+              background-color="#545c64"
+              text-color="#fff"
               active-text-color="#ffd04b"
               style="height: 700px"
               router>

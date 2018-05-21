@@ -16,7 +16,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        
+        /*border: 3px solid black;*/
     }
     .personalInfo-header .personal-avatar{
         width: 100px;

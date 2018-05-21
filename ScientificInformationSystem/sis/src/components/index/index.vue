@@ -6,6 +6,7 @@
 				  <div class="intro">
 				    <h1>科研信息管理系统</h1>
 				    <p>A Scientific Information systems</p>
+				    <img src="../../assets/img/index_bg_gif.gif" height="151" width="172">
 				  </div>
 				</div>
 		</div>
@@ -42,7 +43,10 @@ export default {
 	.index{
 		width: 100%;
 		height: 100%;
-		background: #16a085;
+		/*background: #16a085;*/
+		background: #434343;
+		background-image: url('../../assets/img/index_bg2.png');
+		background-repeat: repeat;
 		font-family: 'Montserrat', sans-serif;
 		color: #fff;
 		line-height: 1.3;
@@ -77,33 +81,12 @@ export default {
 }
 	.index-container{
 		height: 900px;
-		margin-top: 70px;
+		margin-top: 60px;
 	}
-	.daytime{
+/*	.daytime{
 		width: 100%;
 		height: 650px;
-		background-image: url(http://cdn.www.chelaile.net.cn/web/images/asset/daytime_bg.36774c23.png);
-		background-repeat: repeat;
-	}
-	.cloud1{
-		background-image: url(http://cdn.www.chelaile.net.cn/web/images/icons-sfbb092376f.ee0f8bec.png);
-		background-position: 0 -644px;
-		height: 52px;
-		width: 892px;
-		display: inline-block;
-		overflow: hidden;
+		
+	}*/
 
-		    bottom: 145px;
-    margin-left: -500px;
-    -webkit-transition: All .4s ease-in-out;
-    transition: All .4s ease-in-out;
-    -webkit-animation-name: cloud2;
-    animation-name: cloud2;
-    -webkit-animation-duration: 3s;
-    animation-duration: 3s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-play-state: running;
-	}
 </style>

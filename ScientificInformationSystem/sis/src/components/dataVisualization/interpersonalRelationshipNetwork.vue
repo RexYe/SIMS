@@ -53,6 +53,7 @@ export default {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
+                backgroundColor: '#00265f',
                 title: {
                     text: "人际关系网络",
                     subtext: "YQL",
