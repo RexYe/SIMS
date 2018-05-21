@@ -40,7 +40,7 @@
 <script>
 import header from 'components/header/header'
 import DB from '../../DB/db'
-
+import '../../assets/css/override-element-ui.css'
 export default {
 	data() {
 		return {
@@ -82,7 +82,7 @@ export default {
 	}
 }
 </script>
-<style scoped>
+<style>
 	.search{
 		width: 100%;
 		height: 100%;

@@ -2,12 +2,12 @@
 	<div class="paper">
 		<v-header></v-header>
 		<div class="paper-container" v-loading="loading">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
-					
+					<journalinfo-header :name=jheader[0] :website=jheader[1] :logo=jheader[2] :english_name=jheader[3] :honor=jheader[4] :complex_influence=jheader[5] :comprehensive_influence=jheader[6]></journalinfo-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 720px;  border: 1px solid #eee">
+			<el-container style="height: 720px;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <journal-sidebar index="journalPaper"></journal-sidebar>
 				</el-aside>
@@ -69,7 +69,7 @@ import DB from '../../DB/db'
 export default {
   data() {
   	return {
-  		pheader: [],
+  		jheader: [],
   		paperData: [],
   		loading: true,
   		currentPage: 1,
@@ -87,13 +87,17 @@ export default {
   },
   created: function() {
 		const t = this
-		// DB.Search.get_personalinfo_by_uniid({
-		// 	uniid: this.$route.query.uniid
-		// }).then(result=>{
-		//     let { list = [] } = result;
-		//     console.log('list',list)
-		//     t.pheader.push(list[0].name, list[0].organization, list[0].avatar_src)    
-		// })
+		DB.Search.get_journal_by_name({
+            name: this.$route.query.name
+        }).then(result=>{
+            let { list = [] } = result;
+            let honor_arr = list[0].honor.split(';')
+            t.jheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, honor_arr, list[0].complex_influence, list[0].comprehensive_influence)
+            t.intro.push(list[0].introduction)     
+            t.host_unit.push(list[0].host_unit) 
+        }).then(()=>{
+            t.loading = false;
+        })
 		DB.Search.get_paper_by_journal_name({
 			name: this.$route.query.name
 		}).then(result=>{

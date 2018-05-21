@@ -21,7 +21,6 @@ import interpersonalRelationshipNetwork from 'components/dataVisualization/inter
 import domainDistribution from 'components/dataVisualization/domainDistribution'
 import paper from 'components/paper/paper'
 import paperDetail from 'components/paper/paperDetail'
-import project from 'components/project/project'
 
 
 
@@ -95,9 +94,6 @@ const router = new VueRouer({
   },{
     path: '/paperDetail',
     component: paperDetail
-  },{
-    path: '/project',
-    component: project
   },{
     path: '/',
     component: index

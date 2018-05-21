@@ -2,13 +2,13 @@
 	<div class="interpersonalRelationshipNetwork">
 		<v-header></v-header>
 		<div class="interpersonalRelationshipNetwork-container">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px; background: rgba(0,0,0,0)">
 				<el-header>
 					<!-- <p-header name='王小' college="浙江工业大学"></p-header> -->
                     <p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee">
+			<el-container style="height: 100%;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <p-menu index="interpersonalRelationshipNetwork"></p-menu>
 				</el-aside>
@@ -53,7 +53,7 @@ export default {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-                backgroundColor: '#00265f',
+                backgroundColor: 'rgba(0,0,0,0)',
                 title: {
                     text: "人际关系网络",
                     subtext: "YQL",

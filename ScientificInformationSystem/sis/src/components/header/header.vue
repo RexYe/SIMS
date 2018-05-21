@@ -1,6 +1,6 @@
 <template>
     <div class="Header">
-        <img src="../../assets/img/logo.png" height="70" width="70">
+        <img src="../../assets/img/logo.png" height="50" width="50">
         <div class="Header-container" >
             <el-input placeholder="请输入内容" v-model="searchKey" class="input-with-select">
                 <el-select v-model="select" slot="prepend" placeholder="请选择">

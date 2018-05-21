@@ -2,12 +2,12 @@
 	<div class="interpersonalRelationshipNetwork">
 		<v-header></v-header>
 		<div class="interpersonalRelationshipNetwork-container">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
-					
+					<journalinfo-header :name=jheader[0] :website=jheader[1] :logo=jheader[2] :english_name=jheader[3] :honor=jheader[4] :complex_influence=jheader[5] :comprehensive_influence=jheader[6]></journalinfo-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee">
+			<el-container style="height: 100%;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <journal-sidebar index="journalPublishEveryYear"></journal-sidebar>
 				</el-aside>
@@ -31,7 +31,7 @@ import DB from '../../DB/db'
 export default {
     data() {
     	return {
-    		pheader: [],
+    		jheader: [],
             echartsKeyword: [],
             echartsSum: []
     	}
@@ -50,7 +50,7 @@ export default {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-               backgroundColor: '#00265f',
+               backgroundColor: 'rgba(0,0,0,0)',
                 grid: {
                     left: '3%',
                     right: '4%',
@@ -58,27 +58,6 @@ export default {
                     containLabel: true
                 },
                 xAxis: [{
-                    type: 'category',
-                    data: this.echartsKeyword,
-                    axisLine: {
-                        show: true,
-                        lineStyle: {
-                            color: "#063374",
-                            width: 1,
-                            type: "solid"
-                        }
-                    },
-                    axisTick: {
-                        show: false
-                    },
-                    axisLabel: {
-                        show: true,
-                        textStyle: {
-                            color: "#00c7ff",
-                        }
-                    },
-                }],
-                yAxis: [{
                     type: 'value',
                     axisLabel: {
                         formatter: '{value}'
@@ -99,6 +78,27 @@ export default {
                             color: "#063374",
                         }
                     }
+                }],
+                yAxis: [{
+                    type: 'category',
+                    data: this.echartsKeyword,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: "#063374",
+                            width: 1,
+                            type: "solid"
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: true,
+                        textStyle: {
+                            color: "#00c7ff",
+                        }
+                    },
                 }],
                 series: [{
                     type: 'bar',
@@ -123,9 +123,7 @@ export default {
         }
     },
     mounted() {
-        console.log('mounted')
         this.$nextTick(function() {
-            console.log('nexttick')
             setTimeout(()=>{
                 this.drawPie('charts');
             },500)
@@ -140,8 +138,18 @@ export default {
         });
     },
     created: function() {
-        console.log('cteated')
         const t = this
+        DB.Search.get_journal_by_name({
+            name: this.$route.query.name
+        }).then(result=>{
+            let { list = [] } = result;
+            let honor_arr = list[0].honor.split(';')
+            t.jheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, honor_arr, list[0].complex_influence, list[0].comprehensive_influence)
+            t.intro.push(list[0].introduction)     
+            t.host_unit.push(list[0].host_unit) 
+        }).then(()=>{
+            t.loading = false;
+        })
         DB.Search.get_journal_keyword_by_journal_name({
             name: this.$route.query.name
         }).then(result=>{
@@ -161,7 +169,7 @@ export default {
 		height: 100%;
 	}
 	.interpersonalRelationshipNetwork-container{
-		height: 900px;
+		height: 100%;
 		margin-top: 60px;
 	}
 	#charts{

@@ -2,12 +2,12 @@
 	<div class="interpersonalRelationshipNetwork">
 		<v-header></v-header>
 		<div class="interpersonalRelationshipNetwork-container">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px;background-color: rgba(0,0,0,0)">
 				<el-header>
 					
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee">
+			<el-container style="height: 100%;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					  <organization-sidebar index="organizationPublishEveryYear"></organization-sidebar>
 				</el-aside>
@@ -50,7 +50,7 @@ export default {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-               backgroundColor: '#00265f',
+               backgroundColor: 'rgba(0,0,0,0)',
                 grid: {
                     left: '3%',
                     right: '4%',
@@ -162,7 +162,7 @@ export default {
 		height: 100%;
 	}
 	.interpersonalRelationshipNetwork-container{
-		height: 900px;
+		height: 100%;
 		margin-top: 60px;
 	}
 	#charts{

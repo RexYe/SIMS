@@ -2,12 +2,12 @@
 	<div class="interpersonalRelationshipNetwork">
 		<v-header></v-header>
 		<div class="interpersonalRelationshipNetwork-container">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
 					<!-- <organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header> -->
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee">
+			<el-container style="height: 100%;">
 				<el-aside style="font-size: 30px; width: 180px;">
                     <organization-sidebar index="organizationPublishEveryYear"></organization-sidebar>
 				</el-aside>
@@ -50,9 +50,16 @@ export default {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-            // backgroundColor: '#00265f',
+            backgroundColor: 'rgba(0,0,0,0)',
              title: {
-                text: '年度总文献量'
+                text: '年度总文献量',        
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: 16,
+                    color: '#F1F1F3'
+                },
+                left: '6%'
+
             },
             tooltip: {
                 trigger: 'axis'
@@ -75,12 +82,17 @@ export default {
                 containLabel: true
             },
             legend: {
-                data: ['数量']
+                data: ['数量'],
             },
             xAxis: [{
                 type: 'category',
                 axisTick: {
                     alignWithLabel: true
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#b6b5ab'
+                    }
                 },
                 data: this.echartsYear
             }],
@@ -91,7 +103,10 @@ export default {
                 max: this.yAxisMax,
                 position: 'left',
                 axisLabel: {
-                    formatter: '{value}'
+                    formatter: '{value}',
+                    textStyle: {
+                        color: '#b6b5ab'
+                    }
                 }
             }],
             series: [{
@@ -155,7 +170,7 @@ export default {
 		height: 100%;
 	}
 	.interpersonalRelationshipNetwork-container{
-		height: 900px;
+		height: 100%;
 		margin-top: 60px;
 	}
 	#charts{

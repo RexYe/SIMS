@@ -367,27 +367,20 @@ def get_journal_author_rank_by_journal_name(request):
         # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
         db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
         cursor = db.cursor()
-        sql = 'SELECT DISTINCT d.title, d.key_words from search_paper_detail d JOIN ' \
-              'search_paper_title t ON d.title = t.title WHERE t.journal = %s;'
+        sql = 'SELECT  d.name, COUNT(d.name) as rank from search_authors d JOIN search_paper_title t ' \
+              'ON d.uniid = t.authors_uniid WHERE t.journal = %s GROUP BY d.name ORDER BY rank'
         param = (name)
         cursor.execute(sql, param)
         sql_result = cursor.fetchall()
-        keyword_all_arr = []
         for i in sql_result:
-            keyword_all_arr = keyword_all_arr + i[1].split(';')
-        # print(keyword_all_arr)
-        keyword_set_arr = set(keyword_all_arr)
-        for item in keyword_set_arr:
-            # 统计关键词重复次数
-            # print(item, keyword_all_arr.count(item))
             list.append({
-                'keyword': item,
-                'sum': keyword_all_arr.count(item)
+                'author': i[0],
+                'sum': i[1]
             })
+        db.close()
         list = sorted(list, key=lambda x: (-x['sum']))
-        if (len(list)> 10):
+        if (len(list) > 10):
             list = list[:10]
-        db.close();
         total = len(list)
         data = {
             'list': list,
@@ -493,6 +486,7 @@ def get_organization_publish_every_year_by_organization_name(request):
                 'year': i[1],
                 'sum': i[0]
             })
+        db.close()
         listMaxYear = sorted(list, key=lambda x: (-x['sum']))
         max = listMaxYear[0]['sum']
         total = len(list)
@@ -579,6 +573,7 @@ def get_organization_author_rank_by_organization_name(request):
                 'author': i[1],
                 'sum': i[0]
             })
+        db.close()
         list = sorted(list, key=lambda x: (-x['sum']))
         if (len(list) > 10):
             list = list[:10]

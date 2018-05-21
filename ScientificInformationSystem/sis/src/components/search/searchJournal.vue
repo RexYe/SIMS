@@ -94,7 +94,7 @@ export default {
 	}
 	.search-container{
 		height: 900px;
-		margin-top: 70px;
+		margin-top: 60px;
 	}
 	.search-container #search-results-num{
 		padding-left: 10px;

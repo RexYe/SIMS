@@ -2,12 +2,12 @@
 	<div class="personalInfo">
 		<v-header></v-header>
 		<div class="personalInfo-container" v-loading="loading">
-			<el-container style="width:100%; height: 180px; border: 1px solid #eee; background: #FAFAFA">
+			<el-container style="width:100%; height: 180px; background: rgba(0,0,0,0)">
 				<el-header>
 					<journalinfo-header :name=jheader[0] :website=jheader[1] :logo=jheader[2] :english_name=jheader[3] :honor=jheader[4] :complex_influence=jheader[5] :comprehensive_influence=jheader[6]></journalinfo-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee" >
+			<el-container style="height: 100%;" >
 				<el-aside style="font-size: 30px; width: 160px;">
 					 <journal-sidebar index="journalInfo"></journal-sidebar>
 				</el-aside>
@@ -59,7 +59,6 @@ export default {
 	},
 	created: function() {
 		const t = this
-		console.log('name',this.$route)
 		DB.Search.get_journal_by_name({
 			name: this.$route.query.name
 		}).then(result=>{

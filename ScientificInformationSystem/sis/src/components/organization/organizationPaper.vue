@@ -2,12 +2,12 @@
 	<div class="paper">
 		<v-header></v-header>
 		<div class="paper-container" v-loading="loading">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
 					<!-- <organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header> -->
 				</el-header>
 			</el-container>
-			<el-container style="height: 720px;  border: 1px solid #eee">
+			<el-container style="height: 720px;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <organization-sidebar index="organizationPaper"></organization-sidebar>
 				</el-aside>
@@ -17,7 +17,7 @@
 						    :data="paperData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
 						    height="610"
 						    stripe
-						    style="width: 100%">
+						    style="width: 100%; background-color: rgba(0,0,0,0)">
 						    <el-table-column
 						      prop="authors"
 						      label="作者"
@@ -127,6 +127,9 @@ export default {
 	.paper{
 		width: 100%;
 		height: 100%;
+	}
+	.paper .el-table th tr{
+		background: red;
 	}
 	.paper-container{
 		height: 900px;

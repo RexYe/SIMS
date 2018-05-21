@@ -2,7 +2,7 @@
     <div class="journal-Menu">
          <el-menu
               :default-active="index"
-              background-color="#545c64"
+              background-color="rgba(0,0,0,0)"
               text-color="#fff"
               active-text-color="#ffd04b"
               style="height: 700px"

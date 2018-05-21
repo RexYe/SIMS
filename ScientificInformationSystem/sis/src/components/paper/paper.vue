@@ -3,13 +3,13 @@
 		<router-link :to="/paper2/" ></router-link>
 		<v-header></v-header>
 		<div class="paper-container" v-loading="loading">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
 					<!-- <p-header name='王小' college="浙江工业大学"></p-header> -->
 					<p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 720px;  border: 1px solid #eee">
+			<el-container style="height: 720px;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <p-menu index="paper"></p-menu>
 				</el-aside>

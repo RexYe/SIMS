@@ -2,12 +2,12 @@
 	<div class="interpersonalRelationshipNetwork">
 		<v-header></v-header>
 		<div class="interpersonalRelationshipNetwork-container">
-			<el-container style="height: 180px; border: 1px solid #eee; background-color: #FAFAFA">
+			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
-					
+					<!-- <journalinfo-header :name=jheader[0] :website=jheader[1] :logo=jheader[2] :english_name=jheader[3] :honor=jheader[4] :complex_influence=jheader[5] :comprehensive_influence=jheader[6]></journalinfo-header> -->
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee">
+			<el-container style="height: 100%;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <journal-sidebar index="journalPublishEveryYear"></journal-sidebar>
 				</el-aside>
@@ -31,8 +31,8 @@ import DB from '../../DB/db'
 export default {
     data() {
     	return {
-    		pheader: [],
-            echartsYear: [],
+    		jheader: [],
+            echartsAuthor: [],
             echartsSum: []
     	}
     },
@@ -50,7 +50,7 @@ export default {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-              backgroundColor: '#00265f',
+              backgroundColor: 'rgba(0,0,0,0)',
     grid: {
         left: '3%',
         right: '4%',
@@ -59,17 +59,7 @@ export default {
     },
     xAxis: [{
         type: 'category',
-        data: ['喀什市',
-            '疏附县',
-            '疏勒县',
-            '英吉沙县',
-            '泽普县',
-            '岳普湖县',
-            '巴楚县',
-            '伽师县',
-            '叶城县',
-            '莎车县 ',
-        ],
+        data: this.echartsAuthor,
         axisLine: {
             show: true,
             lineStyle: {
@@ -91,7 +81,7 @@ export default {
     yAxis: [{
         type: 'value',
         axisLabel: {
-            formatter: '{value} %'
+            formatter: '{value}'
         },
         axisLine: {
             show: false,
@@ -112,7 +102,7 @@ export default {
     }],
     series: [{
         type: 'bar',
-        data: [20, 50, 80, 58, 83, 68, 57, 80, 42, 66],
+        data: this.echartsSum,
         barWidth: 20, //柱子宽度
         barGap: 1, //柱子之间间距
         itemStyle: {
@@ -149,14 +139,24 @@ export default {
         });
     },
     created: function() {
-        console.log('cteated')
         const t = this
-        DB.Search.get_journal_publish_every_year_by_journal_name({
+        DB.Search.get_journal_by_name({
+            name: this.$route.query.name
+        }).then(result=>{
+            let { list = [] } = result;
+            let honor_arr = list[0].honor.split(';')
+            t.jheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, honor_arr, list[0].complex_influence, list[0].comprehensive_influence)
+            t.intro.push(list[0].introduction)     
+            t.host_unit.push(list[0].host_unit) 
+        }).then(()=>{
+            t.loading = false;
+        })
+        DB.Search.get_journal_author_rank_by_journal_name({
             name: this.$route.query.name
         }).then(result=>{
             let { list = [] } = result;
             list.map(function(index, elem) {
-                t.echartsAuthor.push(index.auth)
+                t.echartsAuthor.push(index.author)
                 t.echartsSum.push(index.sum)
             }) 
         });
@@ -170,7 +170,7 @@ export default {
 		height: 100%;
 	}
 	.interpersonalRelationshipNetwork-container{
-		height: 900px;
+		height: 100%;
 		margin-top: 60px;
 	}
 	#charts{

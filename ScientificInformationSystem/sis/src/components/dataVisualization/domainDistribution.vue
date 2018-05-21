@@ -8,7 +8,7 @@
           <p-header :name=pheader[0] :college=pheader[1] :avatar_src=pheader[2]></p-header>
 				</el-header>
 			</el-container>
-			<el-container style="height: 100%;  border: 1px solid #eee">
+			<el-container style="height: 100%;">
 				<el-aside style="font-size: 30px; width: 180px;">
 					 <p-menu index="interpersonalRelationshipNetwork"></p-menu>
 				</el-aside>
