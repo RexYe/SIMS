@@ -16,5 +16,6 @@ urlpatterns = [
     path('get_organization_publish_every_year_by_organization_name', views.get_organization_publish_every_year_by_organization_name, ),
     path('get_organization_keyword_by_organization_name', views.get_organization_keyword_by_organization_name, ),
     path('get_organization_author_rank_by_organization_name', views.get_organization_author_rank_by_organization_name, ),
-
+    path('user_login', views.user_login, ),
+    path('add_authors', views.add_authors, ),
 ]

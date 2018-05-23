@@ -69,7 +69,7 @@ export default {
 		// this.loading = true;
 	},
 	created: function() {
-		// this.loading = true;
+		document.body.scrollTop = 0;
 	},
 	mounted: function() {
 		const t = this

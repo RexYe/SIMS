@@ -4,7 +4,7 @@
 		<div class="interpersonalRelationshipNetwork-container">
 			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
-					<!-- <organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header> -->
+					<organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header>
 				</el-header>
 			</el-container>
 			<el-container style="height: 100%;">
@@ -31,7 +31,7 @@ import DB from '../../DB/db'
 export default {
     data() {
     	return {
-    		pheader: [],
+    		oheader: [],
             echartsAuthor: [],
             echartsSum: []
     	}
@@ -137,7 +137,13 @@ export default {
         });
     },
     created: function() {
-        const t = this
+        const t = this;
+        DB.Search.get_organization_by_name({
+            name: this.$route.query.name
+        }).then(result=>{
+            let { list = [] } = result;
+            t.oheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, list[0].location)
+        });
         DB.Search.get_organization_author_rank_by_organization_name({
             name: this.$route.query.name
         }).then(result=>{

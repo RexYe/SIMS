@@ -25,6 +25,7 @@
 <script>
 	import {login, getAdminInfo} from '@/api/getData'
 	import {mapActions, mapState} from 'vuex'
+	import DB from '../DB/db.js'
 
 	export default {
 	    data(){
@@ -56,10 +57,13 @@
 		methods: {
 			...mapActions(['getAdminData']),
 			async submitForm(formName) {
-				this.$refs[formName].validate(async (valid) => {
-					if (valid) {
-						const res = await login({user_name: this.loginForm.username, password: this.loginForm.password})
-						if (res.status == 1) {
+				const t = this
+				DB.Search.user_login({
+			        username: this.loginForm.username,
+			        password: this.loginForm.password
+			    }).then(result=>{
+		            let { list = [] } = result
+		            if (list[0].status == 1) {
 							this.$message({
 		                        type: 'success',
 		                        message: '登录成功'
@@ -68,30 +72,46 @@
 						}else{
 							this.$message({
 		                        type: 'error',
-		                        message: res.message
+		                        message: '用户名或密码错误'
 		                    });
 						}
-					} else {
-						this.$notify.error({
-							title: '错误',
-							message: '请输入正确的用户名密码',
-							offset: 100
-						});
-						return false;
-					}
-				});
+			    })
+				// this.$refs[formName].validate(async (valid) => {
+				// 	if (valid) {
+				// 		const res = await login({user_name: this.loginForm.username, password: this.loginForm.password})
+				// 		if (res.status == 1) {
+				// 			this.$message({
+		  //                       type: 'success',
+		  //                       message: '登录成功'
+		  //                   });
+				// 			this.$router.push('manage')
+				// 		}else{
+				// 			this.$message({
+		  //                       type: 'error',
+		  //                       message: res.message
+		  //                   });
+				// 		}
+				// 	} else {
+				// 		this.$notify.error({
+				// 			title: '错误',
+				// 			message: '请输入正确的用户名密码',
+				// 			offset: 100
+				// 		});
+				// 		return false;
+				// 	}
+				// });
 			},
 		},
 		watch: {
-			adminInfo: function (newValue){
-				if (newValue.id) {
-					this.$message({
-                        type: 'success',
-                        message: '检测到您之前登录过，将自动登录'
-                    });
-					this.$router.push('manage')
-				}
-			}
+			// adminInfo: function (newValue){
+			// 	if (newValue.id) {
+			// 		this.$message({
+   //                      type: 'success',
+   //                      message: '检测到您之前登录过，将自动登录'
+   //                  });
+			// 		// this.$router.push('manage')
+			// 	}
+			// }
 		}
 	}
 </script>

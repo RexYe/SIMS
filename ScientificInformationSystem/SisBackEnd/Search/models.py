@@ -55,3 +55,12 @@ class organization(models.Model):
     logo = models.CharField(max_length=100)
     website = models.CharField(max_length=100)
     introduction = models.CharField(max_length=500)
+
+
+class users(models.Model):
+    username = models.CharField(max_length=20)
+    password = models.CharField(max_length=20)
+    right_type = models.CharField(max_length=4)
+
+    def __unicode__(self):
+        return self.users

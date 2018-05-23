@@ -595,3 +595,125 @@ def get_organization_author_rank_by_organization_name(request):
         response['error_num'] = 1
 
     return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def user_login(request):
+    if 'username' in request.GET:
+        username = request.GET['username']
+    if 'password' in request.GET:
+        password = request.GET['password']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'SELECT COUNT(id) FROM `search_users` WHERE username = %s AND `password` = %s'
+        param = (username, password)
+        cursor.execute(sql, param)
+        sql_result = cursor.fetchall()
+        for i in sql_result:
+            if(i[0] == 1):
+                list.append({
+                    'status': 1
+                })
+            else:
+                list.append({
+                    'status': 0
+                })
+        db.close()
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def add_authors(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    if 'uniid' in request.GET:
+        uniid = request.GET['uniid']
+    if 'sex' in request.GET:
+        sex = request.GET['sex']
+    if 'organization' in request.GET:
+        organization = request.GET['organization']
+    if 'avatar_src' in request.GET:
+        if request.GET['avatar_src'] == '':
+            avatar_src = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2766636815,3165673923&fm=27&gp=0.jpg'
+        else:
+            avatar_src = request.GET['avatar_src']
+    if 'work_experience' in request.GET:
+        if request.GET['work_experience'] == '':
+            work_experience = '无'
+        else:
+            work_experience = request.GET['work_experience']
+    if 'edu_experience' in request.GET:
+        if request.GET['edu_experience'] == '':
+            edu_experience = '无'
+        else:
+            edu_experience = request.GET['edu_experience']
+    if 'domain' in request.GET:
+        if request.GET['domain'] == '':
+            domain = '无'
+        else:
+            domain = request.GET['domain']
+    if 'uniid' in request.GET:
+        uniid = request.GET['uniid']
+    if 'intro' in request.GET:
+        if request.GET['intro'] == '':
+            intro = '无'
+        else:
+            intro = request.GET['intro']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql0 = 'SELECT COUNT(uniid) FROM search_authors WHERE uniid = %s'
+        param0 = (uniid)
+        cursor.execute(sql0, param0)
+        sql_result2 = cursor.fetchall()
+        for i in sql_result2:
+            print(i)
+        sql = 'INSERT INTO search_authors (uniid,name,sex,organization,avatar_src,work_experience,' \
+              'edu_experience,domain,intro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        param = (uniid,name,sex,organization,avatar_src,work_experience,edu_experience,domain,intro)
+        # cursor.execute(sql, param)
+        # db.commit()
+        sql2 = 'SELECT COUNT(uniid) FROM search_authors WHERE uniid = %s'
+        param2 = (uniid)
+        cursor.execute(sql2, param2)
+        sql_result2 = cursor.fetchall()
+        for i in sql_result2:
+            print(i)
+        db.close()
+        list.append({
+            'status': 1
+        })
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)

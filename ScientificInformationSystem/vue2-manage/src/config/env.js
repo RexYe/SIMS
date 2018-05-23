@@ -11,11 +11,10 @@ let routerMode = 'history';
 let baseImgPath;
 
 if (process.env.NODE_ENV == 'development') {
-	  baseUrl = 'http://localhost:8002';
+	// baseUrl = 'http://localhost:8002';
+ //    baseImgPath = 'http://localhost:8002/img/';
+ 	baseUrl = 'http://localhost:8000';
     baseImgPath = 'http://localhost:8002/img/';
-}else{
-	  baseUrl = 'http://cangdu.org:8001';
-    baseImgPath = 'http://cangdu.org:8001/img/';
 }
 
 export {

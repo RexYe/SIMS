@@ -4,8 +4,8 @@
         <header class="addDomain_title">新建用户</header>
         <div class="addDomain_content">
             <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="用户名" prop="age">
-                    <el-input v-model.number="ruleForm2.age"></el-input>
+                <el-form-item label="用户名" prop="username">
+                    <el-input v-model="ruleForm2.username"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="pass">
                     <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
@@ -26,9 +26,9 @@
     import headTop from '../components/headTop'
      export default {
     data() {
-      var checkAge = (rule, value, callback) => {
+      var checkUsername = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('年龄不能为空'));
+          return callback(new Error('用户名不能为空'));
         }
         setTimeout(() => {
           if (!Number.isInteger(value)) {
@@ -65,7 +65,7 @@
         ruleForm2: {
           pass: '',
           checkPass: '',
-          age: ''
+          username: ''
         },
         rules2: {
           pass: [
@@ -74,8 +74,8 @@
           checkPass: [
             { validator: validatePass2, trigger: 'blur' }
           ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
+          username: [
+            { validator: checkUsername, trigger: 'blur' }
           ]
         }
       };
