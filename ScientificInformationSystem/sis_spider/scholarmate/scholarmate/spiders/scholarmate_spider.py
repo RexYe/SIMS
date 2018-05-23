@@ -4,7 +4,7 @@ import re
 import json
 from scrapy_splash import SplashRequest
 
-des3PsnId = 'k%2By%2BHpfOQiUIJtkx0NfJ7Q'
+des3PsnId = 'gdC9pv0cs%2BuARnjabVjxoA'
 pageNo = 1
 authors = ''
 authors2 = ''
@@ -50,7 +50,7 @@ class ScholarmateSpider(scrapy.Spider):
             if detail_url is not None:
                 yield scrapy.Request(detail_url, callback=self.parse_paper_detail)
         global pageNo
-        if(pageNo<1):
+        if(pageNo<3):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)
@@ -78,3 +78,5 @@ class ScholarmateSpider(scrapy.Spider):
             authors2 = ''
             # print(quote.xpath('.//div[@class="detail-pub__abstract_content"]/text()').extract_first())
 # scrapy crawl scholarmate -o wangwanliang.json -s FEED_EXPORT_ENCODING=utf-8
+
+# scrapy crawl scholarmate -o results.json

@@ -57,11 +57,21 @@ export default {
                     bottom: '3%',
                     containLabel: true
                 },
+                title: {
+                    text: '关键词分布',        
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 16,
+                        color: '#F1F1F3'
+                    },
+                    left: '6%'
+                },
                 xAxis: [{
                     type: 'value',
                     axisLabel: {
                         formatter: '{value}'
                     },
+                    minInterval : 1,
                     axisLine: {
                         show: false,
                         lineStyle: {
@@ -90,6 +100,7 @@ export default {
                             type: "solid"
                         }
                     },
+
                     axisTick: {
                         show: false
                     },
@@ -108,7 +119,7 @@ export default {
                    
                     itemStyle: {
                         normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
                                 offset: 0,
                                 color: '#00fcae'
                             }, {
@@ -116,7 +127,11 @@ export default {
                                 color: '#006388'
                             }]),
                             opacity: 1,
-                        }
+                            barBorderRadius: 7
+                        },
+                        emphasis: {
+                            barBorderRadius: 7
+                        },
                     }
                 }]
             });

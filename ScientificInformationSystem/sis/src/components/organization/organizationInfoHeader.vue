@@ -26,7 +26,7 @@
     }
     .journalInfo-header .journal-logo{
         width: 120px;
-        height: 166px;
+        height: 120px;
         overflow: hidden;
     }
     .journalInfo-header .journal-logo img{

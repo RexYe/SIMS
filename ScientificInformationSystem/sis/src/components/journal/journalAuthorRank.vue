@@ -4,7 +4,7 @@
 		<div class="interpersonalRelationshipNetwork-container">
 			<el-container style="height: 180px; background-color: rgba(0,0,0,0)">
 				<el-header>
-					<!-- <journalinfo-header :name=jheader[0] :website=jheader[1] :logo=jheader[2] :english_name=jheader[3] :honor=jheader[4] :complex_influence=jheader[5] :comprehensive_influence=jheader[6]></journalinfo-header> -->
+					<journalinfo-header :name=jheader[0] :website=jheader[1] :logo=jheader[2] :english_name=jheader[3] :honor=jheader[4] :complex_influence=jheader[5] :comprehensive_influence=jheader[6]></journalinfo-header>
 				</el-header>
 			</el-container>
 			<el-container style="height: 100%;">
@@ -63,7 +63,7 @@ export default {
         axisLine: {
             show: true,
             lineStyle: {
-                color: "#063374",
+                color: "#fff",
                 width: 1,
                 type: "solid"
             }
@@ -83,10 +83,11 @@ export default {
         axisLabel: {
             formatter: '{value}'
         },
+        minInterval : 1,
         axisLine: {
             show: false,
             lineStyle: {
-                color: "#00c7ff",
+                color: "#fff",
                 width: 1,
                 type: "solid"
             },
@@ -96,7 +97,7 @@ export default {
         },
         splitLine: {
             lineStyle: {
-                color: "#063374",
+                color: "#fff",
             }
         }
     }],

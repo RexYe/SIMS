@@ -4,7 +4,7 @@
 		<div class="personalInfo-container" v-loading="loading">
 			<el-container style="width:100%; height: 180px; background: rgba(0,0,0,0)">
 				<el-header>
-					<!-- <organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header> -->
+					<organization-header :name=oheader[0] :website=oheader[1] :logo=oheader[2] :english_name=oheader[3] :location=oheader[4] ></organization-header>
 				</el-header>
 			</el-container>
 			<el-container style="height: 100%;" >

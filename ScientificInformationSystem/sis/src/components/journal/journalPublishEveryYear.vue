@@ -50,8 +50,14 @@ export default {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
-             title: {
-                text: '年度总文献量'
+            title: {
+                text: '年度总文献量',        
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: 16,
+                    color: '#F1F1F3'
+                },
+                left: '6%'
             },
             tooltip: {
                 trigger: 'axis'
@@ -74,12 +80,28 @@ export default {
                 containLabel: true
             },
             legend: {
-                data: ['数量']
+                data: ['数量'],
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: 16,
+                    color: '#F1F1F3'
+                },
             },
             xAxis: [{
                 type: 'category',
                 axisTick: {
                     alignWithLabel: true
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#fff'
+                    },
+
+                },
+                axisLine:{
+                        lineStyle:{
+                            color:'#fff'
+                        }
                 },
                 data: this.echartsYear
             }],
@@ -87,11 +109,19 @@ export default {
                 type: 'value',
                 name: '数量',
                 min: 0,
-                max: 50,
+                max: this.yAxisMax,
                 position: 'left',
                 axisLabel: {
-                    formatter: '{value}'
-                }
+                    formatter: '{value}',
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                },
             }],
             series: [{
                 name: '数量',
@@ -149,6 +179,8 @@ export default {
             name: this.$route.query.name
         }).then(result=>{
             let { list = [] } = result;
+            //总坐标最大值为最大发表量适当加5
+            t.yAxisMax = result.max + 5
             list.map(function(index, elem) {
                 t.echartsYear.push(index.publish_time)
                 t.echartsSum.push(index.sum)

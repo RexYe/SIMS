@@ -61,17 +61,17 @@ export default {
                     left: "center"
                 },
                 tooltip: {},
-                legend: [{
-                    formatter: function(name) {
-                        return echarts.format.truncateText(name, 40, '14px Microsoft Yahei', '…');
-                    },
-                    tooltip: {
-                        show: true
-                    },
-                    selectedMode: 'false',
-                    bottom: 20,
-                    data: this.echartsAuthorList
-                }],
+                // legend: [{
+                //     formatter: function(name) {
+                //         return echarts.format.truncateText(name, 40, '14px Microsoft Yahei', '…');
+                //     },
+                //     tooltip: {
+                //         show: true
+                //     },
+                //     selectedMode: 'false',
+                //     bottom: 20,
+                //     data: this.echartsAuthorList
+                // }],
                 toolbox: {
                     show: true,
                     feature: {
@@ -168,7 +168,7 @@ export default {
 		height: 100%;
 	}
 	.interpersonalRelationshipNetwork-container{
-		height: 900px;
+		height: 100%;
 		margin-top: 60px;
 	}
 	#charts{

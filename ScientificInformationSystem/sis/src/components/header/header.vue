@@ -2,7 +2,7 @@
     <div class="Header">
         <img src="../../assets/img/logo.png" height="50" width="50">
         <div class="Header-container" >
-            <el-input placeholder="请输入内容" v-model="searchKey" class="input-with-select">
+            <el-input placeholder="请输入内容" v-model="searchKey" class="input-with-select" @keyup.enter.native="search">
                 <el-select v-model="select" slot="prepend" placeholder="请选择">
                     <el-option label="作者" value="1"></el-option>
                     <el-option label="期刊" value="2"></el-option>
@@ -88,7 +88,6 @@ export default {
     methods: {
         search: function() {
             const t = this;
-            console.log('select:',t.select, 'searchKey:',t.searchKey);
             t.query_obj = this.searchKey
             if (t.select == 1) {
                 this.$router.push({path: '/search'+'?'+'name='+t.query_obj});

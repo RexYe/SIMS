@@ -21,8 +21,8 @@ export default {
 </script>
 <style>
 	#app{
-		/*background: #101010;*/
-		background-image: url('assets/img/index_bg.png');
+    background: linear-gradient(#272C3A,#312B6A);
+		/*background-image: url('assets/img/index_bg.png');*/
 		color: #fff;
 	}
 </style>

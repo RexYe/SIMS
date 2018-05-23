@@ -86,9 +86,6 @@ export default {
 	.search{
 		width: 100%;
 		height: 100%;
-		background-image: url('http://bpic.588ku.com/back_pic/00/04/27/49/52284998e34e94ea397ec166195f3722.jpg');
-		/*background-repeat: repeat;*/
-
 	}
 	.search-container{
 		height: 900px;

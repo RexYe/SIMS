@@ -289,14 +289,18 @@ def get_journal_publish_every_year_by_journal_name(request):
         list = []
         num = paper_title.objects.filter(journal = name).values_list('publish_time').annotate(Count('id')).order_by('publish_time')
         for i in num :
-            print(i[0], i[1])
+            # print(i[0], i[1])
             list.append({
                 'sum': i[1],
                 'publish_time': i[0],
             })
+        listMaxYear = sorted(list, key=lambda x: (-x['sum']))
+        max = listMaxYear[0]['sum']
         total = len(list)
         data = {
             'list': list,
+            #获取发表最多一年的值，利于坐标的上限取值
+            'max': max,
             'total': total
         }
         response['data'] = data
@@ -328,7 +332,8 @@ def get_journal_keyword_by_journal_name(request):
         keyword_all_arr = []
         for i in sql_result:
             keyword_all_arr = keyword_all_arr + i[1].split(';')
-        # print(keyword_all_arr)
+        for x in range(keyword_all_arr.count('')):
+            keyword_all_arr.remove('')
         keyword_set_arr = set(keyword_all_arr)
         for item in keyword_set_arr:
             # 统计关键词重复次数
@@ -521,7 +526,6 @@ def get_organization_keyword_by_organization_name(request):
             authors_uniid = i['fields']['uniid']
             paperList = paper_detail.objects.raw('SELECT * FROM Search_paper_detail WHERE authors_uniid = %s', [authors_uniid])
             paperList2 = json.loads(serializers.serialize("json", paperList))
-
             for i in paperList2:
                 keyword_all_arr = keyword_all_arr + i['fields']['key_words'].split(';')
         for x in range(keyword_all_arr.count('')):

@@ -51,7 +51,7 @@ export default {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
             backgroundColor: 'rgba(0,0,0,0)',
-             title: {
+            title: {
                 text: '年度总文献量',        
                 textStyle: {
                     fontWeight: 'normal',
@@ -59,7 +59,6 @@ export default {
                     color: '#F1F1F3'
                 },
                 left: '6%'
-
             },
             tooltip: {
                 trigger: 'axis'
@@ -83,6 +82,11 @@ export default {
             },
             legend: {
                 data: ['数量'],
+                textStyle: {
+                    fontWeight: 'normal',
+                    fontSize: 16,
+                    color: '#F1F1F3'
+                },
             },
             xAxis: [{
                 type: 'category',

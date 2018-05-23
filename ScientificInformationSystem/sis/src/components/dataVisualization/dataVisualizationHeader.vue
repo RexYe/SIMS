@@ -5,7 +5,7 @@
               text-color="#fff"
               active-text-color="#ffd04b" router>
             <el-menu-item index="interpersonalRelationshipNetwork">人际关系网络</el-menu-item>
-            <el-menu-item index="domainDistribution">领域分布</el-menu-item>
+            <!-- <el-menu-item index="domainDistribution">领域分布</el-menu-item> -->
         </el-menu>
     </div>
 </template>

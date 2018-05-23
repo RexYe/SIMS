@@ -57,6 +57,23 @@ export default {
                     bottom: '3%',
                     containLabel: true
                 },
+                title: {
+                    text: '关键词分布',        
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 16,
+                        color: '#F1F1F3'
+                    },
+                    left: '6%'
+                },
+                legend: {
+                    data: ['数量'],
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 16,
+                        color: '#F1F1F3'
+                    },
+                },
                 xAxis: [{
                     type: 'value',
                     axisLabel: {

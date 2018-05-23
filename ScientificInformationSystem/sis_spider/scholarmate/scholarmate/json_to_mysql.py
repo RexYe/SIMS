@@ -12,14 +12,14 @@ with open('results.json', encoding='utf-8') as f:
         cursor = db.cursor()
         if('year' in data.keys()):
             # 去除英文版脏数据
-            if(data['author'].find(u"蒋一波") != -1):
+            if(data['author'].find(u"邵奇可") != -1):
                 if(data['title'] is not None):
                     sql = "INSERT INTO search_paper_title (title,authors,publish_time,journal,authors_uniid) VALUES (%s,%s,%s,%s,%s)"
                     param = (data['title'], data['author'].replace('*', ''), data['year'], data['journal'], data['authors_uniid'])
                     cursor.execute(sql, param)
 
         else:
-            if (data['author2'].find(u"蒋一波") != -1):
+            if (data['author2'].find(u"邵奇可") != -1):
                 if (data['title2'] is not None):
                     sql2 = "INSERT INTO search_paper_detail (title,authors,key_words,abstract,src,authors_uniid) VALUES (%s,%s,%s,%s,%s,%s)"
                     param2 = (
