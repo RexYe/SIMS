@@ -16,6 +16,7 @@ import organizationPaper from 'components/organization/organizationPaper.vue'
 import organizationPublishEveryYear from 'components/organization/organizationPublishEveryYear.vue'
 import organizationKeyWord from 'components/organization/organizationKeyWord.vue'
 import organizationAuthorRank from 'components/organization/organizationAuthorRank.vue'
+import organizationCoreAuthorNet from 'components/organization/organizationCoreAuthorNet.vue'
 import searchOrganization from 'components/search/searchOrganization.vue'
 import interpersonalRelationshipNetwork from 'components/dataVisualization/interpersonalRelationshipNetwork'
 import domainDistribution from 'components/dataVisualization/domainDistribution'
@@ -79,6 +80,9 @@ const router = new VueRouer({
   },{
     path: '/organizationAuthorRank',
     component: organizationAuthorRank
+  },{
+    path: '/organizationCoreAuthorNet',
+    component: organizationCoreAuthorNet
   },{
     path: '/interpersonalRelationshipNetwork',
     component: interpersonalRelationshipNetwork
