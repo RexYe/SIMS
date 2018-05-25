@@ -598,6 +598,57 @@ def get_organization_author_rank_by_organization_name(request):
 
 
 @require_http_methods(["GET"])
+def get_organization_core_author_net_by_organization_name(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    response = {}
+    try:
+        list1 = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'SELECT authors FROM search_paper_title'
+        # param = (name)
+        cursor.execute(sql)
+        sql_result = cursor.fetchall()
+        core_author_organization = []
+        for i in sql_result:
+            core_author = i[0].split('; ')[0]
+            sql2 = 'SELECT COUNT(*) from search_authors WHERE name = %s AND organization = %s'
+            param2 = (core_author, name)
+            cursor.execute(sql2, param2)
+            sql_result2 = cursor.fetchall()
+            for i in sql_result2:
+                author_exist = i[0]
+                if(author_exist == 1):
+                    core_author_organization.append(core_author)
+        core_author_organization_set = list(set(core_author_organization))
+        for i in core_author_organization_set:
+            sql3 = 'SELECT authors FROM search_paper_title t JOIN search_authors a ON ' \
+                   'a.uniid = t.authors_uniid WHERE a.`name` = %s'
+            param3 = (i)
+            cursor.execute(sql3, param3)
+            sql_result3 = cursor.fetchall()
+            for i in sql_result3:
+                print(i[0].split('; '))
+        db.close()
+        total = len(list1)
+        data = {
+            'list': list1,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
 def user_login(request):
     if 'username' in request.GET:
         username = request.GET['username']
