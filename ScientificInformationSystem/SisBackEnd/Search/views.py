@@ -604,6 +604,7 @@ def get_organization_core_author_net_by_organization_name(request):
     response = {}
     try:
         list1 = []
+
         # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
         db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
         cursor = db.cursor()
@@ -623,18 +624,47 @@ def get_organization_core_author_net_by_organization_name(request):
                 if(author_exist == 1):
                     core_author_organization.append(core_author)
         core_author_organization_set = list(set(core_author_organization))
+        author_dict_with_coreauthor = []
         for i in core_author_organization_set:
             sql3 = 'SELECT authors FROM search_paper_title t JOIN search_authors a ON ' \
                    'a.uniid = t.authors_uniid WHERE a.`name` = %s'
             param3 = (i)
+            author_now = i
+            # print(i)
             cursor.execute(sql3, param3)
             sql_result3 = cursor.fetchall()
             for i in sql_result3:
-                print(i[0].split('; '))
+                if (author_now == i[0].split('; ')[0]):
+                    authors_arr_without_coreauthor = i[0].split('; ')
+                    del authors_arr_without_coreauthor[0]
+                    authors_arr_without_coreauthor_copy = []
+                    # 拷贝备份用
+                    for j in authors_arr_without_coreauthor:
+                        authors_arr_without_coreauthor_copy.append(j)
+                    # print(authors_arr_without_coreauthor_copy)
+                    for item in authors_arr_without_coreauthor_copy:
+                        # print(item)
+                        sql4 = 'SELECT COUNT(*) from search_authors WHERE name = %s'
+                        param4 = (item)
+                        cursor.execute(sql4, param4)
+                        sql_result4 = cursor.fetchall()
+                        for k in sql_result4:
+                            # print(k[0])
+                            if (k[0] == 0):
+                                authors_arr_without_coreauthor.remove(item)
+                    print('removed:', authors_arr_without_coreauthor)
+                    # print(authors_arr_without_coreauthor)
+                    # author_dict_with_coreauthor.append({
+                    #     'coreauthor': author_now,
+                    #     'otherauthors': authors_arr_without_coreauthor
+                    # })
+        # for i in author_dict_with_coreauthor:
+            # print(i)
+        # print(author_dict_with_coreauthor)
         db.close()
         total = len(list1)
         data = {
-            'list': list1,
+            'list': author_dict_with_coreauthor,
             'total': total
         }
         response['data'] = data
