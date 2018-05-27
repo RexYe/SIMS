@@ -641,7 +641,6 @@ def get_organization_core_author_net_by_organization_name(request):
                     # 拷贝备份用
                     for j in authors_arr_without_coreauthor:
                         authors_arr_without_coreauthor_copy.append(j)
-                    # print(authors_arr_without_coreauthor_copy)
                     for item in authors_arr_without_coreauthor_copy:
                         # print(item)
                         sql4 = 'SELECT COUNT(*) from search_authors WHERE name = %s'
@@ -649,10 +648,26 @@ def get_organization_core_author_net_by_organization_name(request):
                         cursor.execute(sql4, param4)
                         sql_result4 = cursor.fetchall()
                         for k in sql_result4:
-                            # print(k[0])
                             if (k[0] == 0):
                                 authors_arr_without_coreauthor.remove(item)
-                    print('removed:', authors_arr_without_coreauthor)
+
+                    if (len(authors_arr_without_coreauthor)>0):
+                        # print('removed:', authors_arr_without_coreauthor)
+
+                        for g in authors_arr_without_coreauthor:
+                            core_net_counter = 0
+                            param5 = (g)
+                            # print(g)
+                            cursor.execute(sql3, param5)
+                            sql_result5 = cursor.fetchall()
+                            for f in sql_result5:
+                                authors_about_coauthor_arr = f[0].split('; ')
+                                # 当前查询作者的合作作者中存在合作作者为核心作者的情况
+                                if author_now in authors_about_coauthor_arr and authors_about_coauthor_arr[0] == g:
+                                    core_net_counter = core_net_counter + 1
+
+                            if(core_net_counter > 0):
+                                print(author_now, '--', g, core_net_counter)
                     # print(authors_arr_without_coreauthor)
                     # author_dict_with_coreauthor.append({
                     #     'coreauthor': author_now,
