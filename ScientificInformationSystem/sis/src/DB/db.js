@@ -65,6 +65,10 @@ DBF.create('Search',{
         url         :prefix+'/api/get_organization_publish_every_year_by_organization_name',
         method      :'GET',
     },
+    get_organization_core_author_net_by_organization_name:{
+        url         :prefix+'/api/get_organization_core_author_net_by_organization_name',
+        method      :'GET',
+    },
     // ,
     // account_register:{
     //     url         :prefix+'/api/account_register',

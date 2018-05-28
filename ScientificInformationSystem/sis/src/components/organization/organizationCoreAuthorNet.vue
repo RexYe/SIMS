@@ -32,8 +32,10 @@ export default {
     data() {
     	return {
     		oheader: [],
-            echartsYear: [],
-            echartsSum: []
+            echartsData: [],
+            echartsLinks: [],
+            echartsAuthorList :[],
+            echartsAuthorListWithName: [],
     	}
     },
     components: {
@@ -44,105 +46,68 @@ export default {
     },
     beforeCreate: function(){
         let organizationName = localStorage.getItem("organizationName")
-        // this.$router.push({path: '/organizationPublishEveryYear'+'?'+'name='+organizationName})
+        this.$router.push({path: '/organizationCoreAuthorNet'+'?'+'name='+organizationName})
     },
     methods: {
         drawPie (id) {
             this.chart = echarts.init(document.getElementById(id), 'roma');
             this.chart.setOption({
             backgroundColor: 'rgba(0,0,0,0)',
-            title: {
-                text: '年度总文献量',        
-                textStyle: {
-                    fontWeight: 'normal',
-                    fontSize: 16,
-                    color: '#F1F1F3'
-                },
-                left: '6%'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            toolbox: {
-                feature: {
-                    dataView: {
-                        show: true,
-                        readOnly: false
-                    },
-                    restore: {
-                        show: true
-                    },
-                    saveAsImage: {
-                        show: true
-                    }
-                }
-            },
-            grid: {
-                containLabel: true
-            },
-            legend: {
-                data: ['数量'],
-                textStyle: {
-                    fontWeight: 'normal',
-                    fontSize: 16,
-                    color: '#F1F1F3'
-                },
-            },
-            xAxis: [{
-                type: 'category',
-                axisTick: {
-                    alignWithLabel: true
-                },
-                axisLabel: {
+                title: {
+                    text: "核心作者合作关系网络",
+                    top: "top",
+                    left: "center",
                     textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 16,
                         color: '#F1F1F3'
+                    },
+                },
+                tooltip: {},
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataView: {
+                            show: true,
+                            readOnly: true
+                        },
+                        restore: {
+                            show: true
+                        },
+                        saveAsImage: {
+                            show: true
+                        }
                     }
                 },
-                axisLine:{
-                    lineStyle:{
-                        color:'#fff'
-                    }
-                },
-                data: this.echartsYear
-            }],
-            yAxis: [{
-                type: 'value',
-                name: '数量',
-                min: 0,
-                max: this.yAxisMax,
-                position: 'left',
-                axisLabel: {
-                    formatter: '{value}',
-                    textStyle: {
-                        color: '#F1F1F3'
-                    }
-                },
-                axisLine:{
-                    lineStyle:{
-                        color:'#fff'
-                    }
-                },
-            }],
-            series: [{
-                name: '数量',
-                type: 'line',
-                stack: '总量',
+                animationDuration: 3000,
+                animationEasingUpdate: 'quinticInOut',
+                series: [{
+                    name: '核心作者',
+                    type: 'graph',
+                    layout: 'force',
+                    force: {
+                        repulsion: 300
+                    },
+                    data: this.echartsData,
+                    links: this.echartsLinks,
+                    // categories: this.echartsAuthorListWithName,
+                    focusNodeAdjacency: true,
+                    roam: true,
                     label: {
                         normal: {
                             show: true,
                             position: 'top',
                         }
                     },
-                lineStyle: {
+                    lineStyle: {
                         normal: {
-                            width: 3,
-                            shadowColor: 'rgba(0,0,0,0.4)',
-                            shadowBlur: 10,
-                            shadowOffsetY: 10
+                            color: 'green',
+                            curveness: 0,
+                            type: "solid"
                         }
-                    },
-                data: this.echartsSum
-            }]
+                    }
+                }]
+
             });
         }
     },
@@ -150,14 +115,14 @@ export default {
         this.$nextTick(function() {
             setTimeout(()=>{
                 this.drawPie('charts');
-            },500)
+            },1500)
             var that = this;
             var resizeTimer = null;
             window.onresize = function() {
                 if (resizeTimer) clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(function() {
-                    that.drawPie('interpersonalRelationshipNetwork');
-                }, 100);
+                    that.drawPie('charts');
+                }, 300);
             }
         });
     },
@@ -169,17 +134,17 @@ export default {
             let { list = [] } = result;
             t.oheader.push(list[0].name, list[0].website, list[0].logo, list[0].english_name, list[0].location)
         });
-        DB.Search.get_organization_publish_every_year_by_organization_name({
+        DB.Search.get_organization_core_author_net_by_organization_name({
             name: this.$route.query.name
         }).then(result=>{
-            //总坐标最大值为最大发表量适当加10
-            t.yAxisMax = result.max + 10
+            // console.log(result);
             let { list = [] } = result;
-            list.map(function(index, elem) {
-                t.echartsYear.push(index.year)
-                t.echartsSum.push(index.sum)
-            }) 
-        });
+            let { links = [] } = result;
+            // let { echarts_author_list_with_name = [] } = result;
+            t.echartsLinks = links;
+            t.echartsData = list;
+            // console.log(t.echartsLinks)
+        })
     },
 }
 
