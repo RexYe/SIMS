@@ -19,4 +19,8 @@ urlpatterns = [
     path('get_organization_core_author_net_by_organization_name', views.get_organization_core_author_net_by_organization_name, ),
     path('user_login', views.user_login, ),
     path('add_authors', views.add_authors, ),
+    path('add_organization', views.add_organization, ),
+    path('add_journal', views.add_journal, ),
+    path('get_authors_list', views.get_authors_list, ),
+    path('delete_author_by_uniid', views.delete_author_by_uniid, ),
 ]

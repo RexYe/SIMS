@@ -99,18 +99,18 @@
                 }).then(result=>{
                     console.log(result)
                     let { list = [] } = result
-                    // if (list[0].status == 1) {
-                    //         this.$message({
-                    //             type: 'success',
-                    //             message: '登录成功'
-                    //         });
-                    //         this.$router.push('manage')
-                    //     }else{
-                    //         this.$message({
-                    //             type: 'error',
-                    //             message: '用户名或密码错误'
-                    //         });
-                    //     }
+                    if (list[0].status == 1) {
+                            this.$message({
+                                type: 'success',
+                                message: '添加成功'
+                            });
+                            this.$router.push('addAuthors')
+                        }else{
+                            this.$message({
+                                type: 'error',
+                                message: '添加失败'
+                            });
+                        }
                 })
             },
             removeEdu_experience(item) {

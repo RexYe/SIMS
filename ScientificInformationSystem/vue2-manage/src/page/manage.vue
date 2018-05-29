@@ -11,24 +11,24 @@
 					</el-submenu>
 					<el-submenu index="3">
 						<template slot="title"><i class="el-icon-edit"></i>作者管理</template>
-						<el-menu-item index="addAuthors">添加作者</el-menu-item>
+						<el-menu-item index="addAuthors">新增作者</el-menu-item>
 						<el-menu-item index="deleteAuthors">删除作者</el-menu-item>
 					</el-submenu>
 					<el-submenu index="4">
-						<template slot="title"><i class="el-icon-star-on"></i>内容管理</template>
-						<el-menu-item index="paper">论文管理</el-menu-item>
-						<el-menu-item index="project">项目管理</el-menu-item>
+						<template slot="title"><i class="el-icon-star-on"></i>期刊管理</template>
+						<el-menu-item index="paper">新增期刊</el-menu-item>
+						<el-menu-item index="project">删除期刊</el-menu-item>
 					</el-submenu>
 					<el-submenu index="5">
 						<template slot="title"><i class="el-icon-menu"></i>机构管理</template>
 						<el-menu-item index="addOrganization">新增机构</el-menu-item>
 						<el-menu-item index="deleteOrganization">删除机构</el-menu-item>
 					</el-submenu>
-					<el-submenu index="6">
+				<!-- 	<el-submenu index="6">
 						<template slot="title"><i class="el-icon-more"></i>领域管理</template>
 						<el-menu-item index="addDomain">新增领域</el-menu-item>
 						<el-menu-item index="deleteDomain">删除领域</el-menu-item>
-					</el-submenu>
+					</el-submenu> -->
 					<el-submenu index="7">
 						<template slot="title"><i class="el-icon-warning"></i>说明</template>
 						<el-menu-item index="explain">说明</el-menu-item>

@@ -802,14 +802,89 @@ def add_authors(request):
         cursor.execute(sql0, param0)
         sql_result2 = cursor.fetchall()
         for i in sql_result2:
-            print(i)
-        sql = 'INSERT INTO search_authors (uniid,name,sex,organization,avatar_src,work_experience,' \
-              'edu_experience,domain,intro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
-        param = (uniid,name,sex,organization,avatar_src,work_experience,edu_experience,domain,intro)
-        # cursor.execute(sql, param)
-        # db.commit()
+            if i[0] == 0:
+                sql = 'INSERT INTO search_authors (uniid,name,sex,organization,avatar_src,work_experience,' \
+                      'edu_experience,domain,intro) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                param = (uniid,name,sex,organization,avatar_src,work_experience,edu_experience,domain,intro)
+                cursor.execute(sql, param)
+                db.commit()
         sql2 = 'SELECT COUNT(uniid) FROM search_authors WHERE uniid = %s'
         param2 = (uniid)
+        cursor.execute(sql2, param2)
+        sql_result2 = cursor.fetchall()
+        for i in sql_result2:
+            if i[0] == 1:
+                list.append({
+                    'status': 1
+                })
+            else:
+                list.append({
+                    'status': 0
+                })
+        db.close()
+
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+
+@require_http_methods(["GET"])
+def add_organization(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    if 'english_name' in request.GET:
+        english_name = request.GET['english_name']
+    if 'logo' in request.GET:
+        if request.GET['logo'] == '':
+            logo = 'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2766636815,3165673923&fm=27&gp=0.jpg'
+        else:
+            logo = request.GET['logo']
+    if 'website' in request.GET:
+        if request.GET['website'] == '':
+            website = '无官网'
+        else:
+            website = request.GET['website']
+    if 'introduction' in request.GET:
+        if request.GET['introduction'] == '':
+            introduction = '无'
+        else:
+            introduction = request.GET['introduction']
+    if 'location' in request.GET:
+        if request.GET['location'] == '':
+            location = '不详'
+        else:
+            location = request.GET['location']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql0 = 'SELECT COUNT(name) FROM search_organization WHERE name = %s'
+        param0 = (name)
+        cursor.execute(sql0, param0)
+        sql_result2 = cursor.fetchall()
+        for i in sql_result2:
+            print(i)
+        sql = 'INSERT INTO search_organization (name,english_name,logo,location,introduction,website' \
+              ') VALUES (%s, %s, %s, %s, %s, %s)'
+        param = (name,english_name,logo,location,introduction,website)
+        cursor.execute(sql, param)
+        db.commit()
+        sql2 = 'SELECT COUNT(uniid) FROM search_authors WHERE name = %s'
+        param2 = (name)
         cursor.execute(sql2, param2)
         sql_result2 = cursor.fetchall()
         for i in sql_result2:
@@ -818,6 +893,164 @@ def add_authors(request):
         list.append({
             'status': 1
         })
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+@require_http_methods(["GET"])
+def add_journal(request):
+    if 'name' in request.GET:
+        name = request.GET['name']
+    if 'english_name' in request.GET:
+        english_name = request.GET['english_name']
+    if 'logo' in request.GET:
+        if request.GET['logo'] == '':
+            logo = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1056617409,3564418675&fm=27&gp=0.jpg'
+        else:
+            logo = request.GET['logo']
+    if 'website' in request.GET:
+        if request.GET['website'] == '':
+            website = '无官网'
+        else:
+            website = request.GET['website']
+    if 'influence' in request.GET:
+        if request.GET['influence'] == '':
+            influence = '无'
+        else:
+            influence = request.GET['influence']
+    if 'honor' in request.GET:
+        if request.GET['honor'] == '':
+            honor = '无'
+        else:
+            honor = request.GET['honor'].replace(',', ';')
+    if 'introduction' in request.GET:
+        if request.GET['introduction'] == '':
+            introduction = '无'
+        else:
+            introduction = request.GET['introduction']
+    if 'host_unit' in request.GET:
+        if request.GET['host_unit'] == '':
+            host_unit = '不详'
+        else:
+            host_unit = request.GET['host_unit']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql0 = 'SELECT COUNT(name) FROM search_journal WHERE name = %s'
+        param0 = (name)
+        cursor.execute(sql0, param0)
+        sql_result2 = cursor.fetchall()
+        for i in sql_result2:
+            print(i[0])
+            if i[0] == 0:
+                sql = 'INSERT INTO search_journal (name,english_name,logo,influence,honor,introduction,' \
+                      'website,host_unit,category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                param = (name,english_name,logo,influence,honor,introduction,website,host_unit,honor)
+                cursor.execute(sql, param)
+                db.commit()
+        sql2 = 'SELECT COUNT(name) FROM search_journal WHERE name = %s'
+        param2 = (name)
+        cursor.execute(sql2, param2)
+        sql_result2 = cursor.fetchall()
+        for i in sql_result2:
+            print(i[0])
+            if(i[0] == 1):
+                list.append({
+                    'status': 1
+                })
+            else:
+                list.append({
+                    'status': 0
+                })
+        db.close()
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+@require_http_methods(["GET"])
+def get_authors_list(request):
+    response = {}
+    try:
+        list = []
+        tempList = authors.objects.raw('SELECT * FROM Search_authors')
+        tempList2 = json.loads(serializers.serialize("json", tempList))
+        for i in tempList2:
+            list.append({
+                'name': i['fields']['name'],
+                'organization': i['fields']['organization'],
+                'avatar_src': i['fields']['avatar_src'],
+                'sex': i['fields']['sex'],
+                'uniid': i['fields']['uniid'],
+            })
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
+
+
+@require_http_methods(["GET"])
+def delete_author_by_uniid(request):
+    if 'uniid' in request.GET:
+        uniid = request.GET['uniid']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'DELETE  FROM `search_authors` WHERE uniid = %s'
+        param = (uniid)
+        cursor.execute(sql, param)
+        db.commit()
+        sql2 = 'SELECT COUNT(uniid) FROM `search_authors` WHERE uniid = %s'
+        param2 = (uniid)
+        cursor.execute(sql2, param2)
+        sql_result = cursor.fetchall()
+        for i in sql_result:
+            if(i[0] == 0):
+                list.append({
+                    'status': 1
+                })
+            else:
+                list.append({
+                    'status': 0
+                })
+        db.close()
         total = len(list)
         data = {
             'list': list,
