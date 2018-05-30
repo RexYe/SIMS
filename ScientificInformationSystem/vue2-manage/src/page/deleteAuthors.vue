@@ -32,9 +32,9 @@
     </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
-        <el-button
+        <!-- <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
         <el-button
           size="mini"
           type="danger"
@@ -50,51 +50,61 @@
     import DB from '../DB/db.js'
     export default {
     data() {
-      return {
-        authorsData: [],
-      }
+        return {
+            authorsData: [],
+        }
     },
     components: {
-            headTop,
-        },
+        headTop,
+    },
     created: function() {
-      const t = this
-      DB.Search.get_authors_list({
-      }).then(result=>{
-          let { list = [] } = result;
-          for(let i=0 ; i<list.length; i++){
+    const t = this
+    DB.Search.get_authors_list({
+    }).then(result=>{
+        let { list = [] } = result;
+        for(let i=0 ; i<list.length; i++){
             t.authorsData.push(list[i])
-          }    
-      }).then(()=>{
+        }    
+    }).then(()=>{
         t.loading = false;
-      })
-  },
+    })
+    },
     methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-       DB.Search.delete_author_by_uniid({
-        uniid: row.uniid
-      }).then(result=>{
-             console.log(result)
-                    let { list = [] } = result
-                    if (list[0].status == 1) {
-                            this.$message({
-                                type: 'success',
-                                message: '删除成功'
-                            });
-                            this.$router.push('deleteAuthors')
-                            location.reload();
-                        }else{
-                            this.$message({
-                                type: 'error',
-                                message: '删除失败'
-                            });
-                        }  
-      })
-      }
+        handleEdit(index, row) {
+            console.log(index, row);
+        },
+        handleDelete(index, row) {
+            this.$confirm('此操作将永久删除该作者, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+        }).then(() => {
+            DB.Search.delete_author_by_uniid({
+            uniid: row.uniid
+            }).then(result=>{
+                console.log(result)
+                let { list = [] } = result
+                if (list[0].status == 1) {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功'
+                    });
+                    this.$router.push('deleteAuthors')
+                    location.reload();
+                }else{
+                    this.$message({
+                        type: 'error',
+                        message: '删除失败'
+                    });
+                }  
+            })
+        }).catch(() => {
+            this.$message({
+                type: 'info',
+                message: '已取消删除'
+            });          
+        });
+        }
     }
   }
 
