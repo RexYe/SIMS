@@ -1065,3 +1065,46 @@ def delete_author_by_uniid(request):
         response['error_num'] = 1
 
     return JsonResponse(response)
+
+@require_http_methods(["GET"])
+def delete_journal_by_name(request):
+    if 'uniid' in request.GET:
+        uniid = request.GET['uniid']
+    response = {}
+    try:
+        list = []
+        # 打开数据库连接（ip/数据库用户名/登录密码/数据库名）
+        db = pymysql.connect("localhost", "root", "1011", "sis", use_unicode=True, charset="utf8")
+        cursor = db.cursor()
+        sql = 'DELETE  FROM `search_authors` WHERE uniid = %s'
+        param = (uniid)
+        cursor.execute(sql, param)
+        db.commit()
+        sql2 = 'SELECT COUNT(uniid) FROM `search_authors` WHERE uniid = %s'
+        param2 = (uniid)
+        cursor.execute(sql2, param2)
+        sql_result = cursor.fetchall()
+        for i in sql_result:
+            if(i[0] == 0):
+                list.append({
+                    'status': 1
+                })
+            else:
+                list.append({
+                    'status': 0
+                })
+        db.close()
+        total = len(list)
+        data = {
+            'list': list,
+            'total': total
+        }
+        response['data'] = data
+        response['msg'] = 'success'
+        response['success'] = True
+        response['error_num'] = 0
+    except Exception as e:
+        response['msg'] = str(e)
+        response['error_num'] = 1
+
+    return JsonResponse(response)
