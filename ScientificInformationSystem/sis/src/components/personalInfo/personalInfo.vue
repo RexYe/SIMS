@@ -21,12 +21,12 @@
 						<div class="domain">
 							<span>科技领域</span>
 							<div class="line"></div>
-							<div id="domain-list" v-for="domain in domains"><el-tag id="tag" size="small" type="info" >{{domain.name}}</el-tag></div>
+							<div id="domain-list" v-for="domain in domains"><el-tag id="tag" size="small"  >{{domain.name}}</el-tag></div>
 						</div>
 						<div class="keywords">
 							<span>关键词</span>
 							<div class="line"></div>
-							<div id="keywords-list" v-for="keyword in keywords"><el-tag id="tag" size="small" type="info" >{{keyword.name}}</el-tag></div>
+							<div id="keywords-list" v-for="keyword in keywords"><el-tag id="tag" size="small">{{keyword.name}}</el-tag></div>
 						</div>
 						<div class="work-experience">
 							<span>工作经历</span>

@@ -82,7 +82,7 @@
     }
     .influence .no{
         font-size: 14px;
-        color: #8F8B8B;
+        color: red;
     }
 </style>
 <script>

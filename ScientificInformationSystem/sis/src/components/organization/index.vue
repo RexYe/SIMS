@@ -93,7 +93,7 @@ export default {
 	}
 	.resume #info-list{
 		font-size: 16px;
-		color: #6C6A6A;
+		color: #fff;
 		padding: 10px;
 	}
 	.resume .domain{
