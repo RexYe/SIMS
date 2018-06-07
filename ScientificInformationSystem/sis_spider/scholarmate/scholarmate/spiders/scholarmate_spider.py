@@ -4,7 +4,7 @@ import re
 import json
 from scrapy_splash import SplashRequest
 
-des3PsnId = 'BBd8X5gl31NWGcwDWDwUCQ'
+des3PsnId = 'thxMLiZ2TRbR3sBEw4IsRQ'
 pageNo = 1
 authors = ''
 authors2 = ''
@@ -50,7 +50,7 @@ class ScholarmateSpider(scrapy.Spider):
             if detail_url is not None:
                 yield scrapy.Request(detail_url, callback=self.parse_paper_detail)
         global pageNo
-        if(pageNo<3):
+        if(pageNo<5):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)
