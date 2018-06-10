@@ -50,7 +50,7 @@ class ScholarmateSpider(scrapy.Spider):
             if detail_url is not None:
                 yield scrapy.Request(detail_url, callback=self.parse_paper_detail)
         global pageNo
-        if(pageNo<5):
+        if(pageNo<1):
             pageNo += 1
             next_page_url = 'https://www.scholarmate.com/pubweb/outside/ajaxpublist?des3PsnId='+des3PsnId+'&page.pageNo='+str(
                 pageNo)
