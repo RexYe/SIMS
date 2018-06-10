@@ -22,8 +22,10 @@ export default {
 </script>
 <style>
 	#app{
-    background: linear-gradient(#272C3A,#BFE4A2);
-		/*background-image: url('assets/img/index_bg.png');*/
+    /*background: linear-gradient(#272C3A,#F4F2F2);*/
+		background-image: url('assets/img/index_bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 		color: #fff;
 	}
   .toback{

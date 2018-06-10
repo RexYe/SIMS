@@ -115,7 +115,7 @@ export default {
         this.$nextTick(function() {
             setTimeout(()=>{
                 this.drawPie('charts');
-            },1500)
+            },2500)
             var that = this;
             var resizeTimer = null;
             window.onresize = function() {

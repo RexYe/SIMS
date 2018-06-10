@@ -147,7 +147,7 @@ export default {
         this.$nextTick(function() {
             setTimeout(()=>{
                 this.drawPie('charts');
-            },500)
+            },1500)
             var that = this;
             var resizeTimer = null;
             window.onresize = function() {
@@ -170,6 +170,7 @@ export default {
             name: this.$route.query.name
         }).then(result=>{
             let { list = [] } = result;
+            console.log(list);
             list.map(function(index, elem) {
                 t.echartsKeyword.push(index.keyword)
                 t.echartsSum.push(index.sum)
